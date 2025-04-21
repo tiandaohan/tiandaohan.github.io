@@ -529,61 +529,69 @@ function getTranslation(key) {
 
 // 设置语言
 function setLanguage(lang) {
-    if (!translations[lang]) return;
+    if (!translations[lang]) {
+        console.error(`Language ${lang} not found`);
+        return;
+    }
+
+    document.documentElement.lang = lang;
     
-    currentLang = lang;
-    localStorage.setItem('language', lang);
-    document.documentElement.setAttribute('lang', lang);
-    
-    // 更新所有带有 data-i18n 属性的元素
+    // 更新所有带有data-i18n属性的元素
     document.querySelectorAll('[data-i18n]').forEach(element => {
         const key = element.getAttribute('data-i18n');
-        const translation = getTranslation(key);
+        const translation = translations[lang][key];
+        
         if (translation) {
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+            // 如果元素是input，更新placeholder
+            if (element.tagName.toLowerCase() === 'input' && element.type === 'text') {
                 element.placeholder = translation;
-            } else {
-                element.textContent = translation;
-                }
             }
-        });
-
-    // 更新所有带有 data-i18n-placeholder 属性的元素
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-        const key = element.getAttribute('data-i18n-placeholder');
-        const translation = getTranslation(key);
-        if (translation) {
-            element.placeholder = translation;
+            // 如果元素是img，更新alt文本
+            else if (element.tagName.toLowerCase() === 'img') {
+                element.alt = translation;
+            }
+            // 对于其他元素，更新文本内容
+            else {
+                element.textContent = translation;
+            }
+        } else {
+            console.warn(`Translation not found for key: ${key} in language: ${lang}`);
         }
     });
-    
-    // 更新所有带有 data-i18n-alt 属性的元素
+
+    // 更新所有带有data-i18n-alt属性的元素的alt文本
     document.querySelectorAll('[data-i18n-alt]').forEach(element => {
         const key = element.getAttribute('data-i18n-alt');
-        const translation = getTranslation(key);
+        const translation = translations[lang][key];
         if (translation) {
             element.alt = translation;
         }
     });
-    
-    // 更新语言切换按钮的激活状态
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-    });
 }
 
-// 初始化语言
+// 初始化语言设置
 document.addEventListener('DOMContentLoaded', () => {
-    // 设置初始语言
-    setLanguage(currentLang);
+    // 获取用户的语言偏好
+    const userLang = localStorage.getItem('language') || 
+                    navigator.language || 
+                    navigator.userLanguage || 
+                    'zh-CN';
     
-    // 为所有语言切换按钮添加事件监听器
-    document.querySelectorAll('.lang-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            const lang = e.target.getAttribute('data-lang');
-            if (lang) {
-                setLanguage(lang);
-            }
+    // 设置初始语言
+    setLanguage(userLang);
+    
+    // 更新语言切换按钮状态
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (btn.dataset.lang === userLang) {
+            btn.classList.add('active');
+        }
+        
+        btn.addEventListener('click', () => {
+            const lang = btn.dataset.lang;
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            setLanguage(lang);
+            localStorage.setItem('language', lang);
         });
     });
 });

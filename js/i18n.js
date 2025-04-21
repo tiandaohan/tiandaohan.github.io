@@ -4,14 +4,69 @@ class I18nManager {
         this.translations = {};
         this.currentLang = localStorage.getItem('language') || 'zh-CN';
         this.fallbackLang = 'zh-CN';
+        this.initialized = false;
+        this.initPromise = null;
     }
 
     // 初始化语言管理器
     init() {
-        document.addEventListener('DOMContentLoaded', () => {
-            this.updatePageLanguage();
-            this.setupLanguageSwitcher();
+        if (this.initPromise) {
+            return this.initPromise;
+        }
+
+        this.initPromise = new Promise((resolve) => {
+            // 确保 DOM 完全加载
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    this._initialize();
+                    resolve();
+                });
+            } else {
+                this._initialize();
+                resolve();
+            }
         });
+
+        return this.initPromise;
+    }
+
+    // 私有初始化方法
+    _initialize() {
+        if (this.initialized) {
+            return;
+        }
+
+        // 设置 MutationObserver 来处理动态加载的内容
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.addedNodes.length) {
+                    this.updatePageLanguage();
+                }
+            });
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+
+        this.updatePageLanguage();
+        this.setupLanguageSwitcher();
+        this.initialized = true;
+
+        // 添加错误处理
+        window.addEventListener('error', (e) => {
+            if (e.message.includes('i18n')) {
+                console.error('Translation error:', e);
+                this.handleTranslationError();
+            }
+        });
+    }
+
+    // 处理翻译错误
+    handleTranslationError() {
+        // 尝试重新加载翻译
+        this.updatePageLanguage();
     }
 
     // 注册翻译
@@ -57,46 +112,68 @@ class I18nManager {
         
         this.currentLang = lang;
         localStorage.setItem('language', lang);
-        this.updatePageLanguage();
         
-        // 触发自定义事件
-        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
+        // 确保初始化完成后再更新语言
+        this.init().then(() => {
+            this.updatePageLanguage();
+            // 触发自定义事件
+            window.dispatchEvent(new CustomEvent('languageChanged', { 
+                detail: { 
+                    language: lang,
+                    timestamp: new Date().getTime() // 添加时间戳避免缓存
+                }
+            }));
+        });
     }
 
     // 更新页面语言
     updatePageLanguage() {
-        // 设置HTML文档的语言
-        document.documentElement.lang = this.currentLang;
-        
-        // 更新所有带有data-i18n属性的元素
-        document.querySelectorAll('[data-i18n]').forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            const params = this.getElementParams(element);
-            const translation = this.translate(key, params);
+        try {
+            // 设置HTML文档的语言
+            document.documentElement.lang = this.currentLang;
             
-            if (translation) {
-                if (element.tagName === 'INPUT' && element.type === 'placeholder') {
-                    element.placeholder = translation;
-                } else {
-                    element.textContent = translation;
-                }
-            }
-        });
-        
-        // 更新所有带有data-i18n-attr的元素
-        document.querySelectorAll('[data-i18n-attr]').forEach(element => {
-            const attrs = element.getAttribute('data-i18n-attr').split(',');
-            attrs.forEach(attr => {
-                const [attrName, key] = attr.trim().split(':');
-                if (attrName && key) {
+            // 更新所有带有data-i18n属性的元素
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                try {
+                    const key = element.getAttribute('data-i18n');
                     const params = this.getElementParams(element);
                     const translation = this.translate(key, params);
+                    
                     if (translation) {
-                        element.setAttribute(attrName, translation);
+                        if (element.tagName === 'INPUT' && element.type === 'placeholder') {
+                            element.placeholder = translation;
+                        } else {
+                            element.textContent = translation;
+                        }
+                    } else {
+                        console.warn(`Missing translation for key: ${key} in language: ${this.currentLang}`);
                     }
+                } catch (err) {
+                    console.error(`Error updating element with key: ${element.getAttribute('data-i18n')}`, err);
                 }
             });
-        });
+
+            // 更新所有带有data-i18n-attr的元素
+            document.querySelectorAll('[data-i18n-attr]').forEach(element => {
+                try {
+                    const attrs = element.getAttribute('data-i18n-attr').split(',');
+                    attrs.forEach(attr => {
+                        const [attrName, key] = attr.trim().split(':');
+                        if (attrName && key) {
+                            const params = this.getElementParams(element);
+                            const translation = this.translate(key, params);
+                            if (translation) {
+                                element.setAttribute(attrName, translation);
+                            }
+                        }
+                    });
+                } catch (err) {
+                    console.error(`Error updating attributes for element`, err);
+                }
+            });
+        } catch (err) {
+            console.error('Error in updatePageLanguage:', err);
+        }
     }
 
     // 获取元素的参数
@@ -148,6 +225,15 @@ class I18nManager {
 
 // 创建全局实例
 const i18n = new I18nManager();
+
+// 确保在其他脚本使用之前初始化完成
+i18n.init().then(() => {
+    // 触发一个事件表示i18n已经准备就绪
+    window.dispatchEvent(new CustomEvent('i18nReady'));
+});
+
+// 导出全局实例供其他模块使用
+window.i18n = i18n;
 
 // 注册翻译
 i18n.registerTranslations('zh-CN', {
@@ -252,8 +338,16 @@ i18n.registerTranslations('zh-CN', {
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
 
     // 媒体更新
+    'media.title': '媒体',
+    'media.news.title': '媒体报道',
+    'media.news.desc': '关注行业动态，传播企业声音',
+    'media.news.alt': '媒体报道图片',
+    'media.brand.title': '品牌传播',
+    'media.brand.desc': '打造品牌影响力',
+    'media.brand.alt': '品牌传播图片',
     'media.updates.title': '企业动态',
     'media.updates.desc': '分享企业最新资讯和发展动态',
+    'media.updates.alt': '企业动态图片',
 
     // 产品相关
     'products.title': '产品目录',
@@ -457,9 +551,17 @@ i18n.registerTranslations('zh-TW', {
     'footer.quickLinks': '快速鏈接',
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. 保留所有權利。',
 
-    // 媒体更新
+    // 媒體部分
+    'media.title': '媒體',
+    'media.news.title': '媒體報導',
+    'media.news.desc': '關注行業動態，傳播企業聲音',
+    'media.news.alt': '媒體報導圖片',
+    'media.brand.title': '品牌傳播',
+    'media.brand.desc': '打造品牌影響力',
+    'media.brand.alt': '品牌傳播圖片',
     'media.updates.title': '企業動態',
     'media.updates.desc': '分享企業最新資訊和發展動態',
+    'media.updates.alt': '企業動態圖片',
 
     // 產品相關
     'products.title': '產品目錄',
@@ -663,9 +765,17 @@ i18n.registerTranslations('en', {
     'footer.quickLinks': 'Quick Links',
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
 
-    // 媒体更新
+    // Media Section
+    'media.title': 'Media',
+    'media.news.title': 'Media Coverage',
+    'media.news.desc': 'Industry news and corporate voice',
+    'media.news.alt': 'Media coverage image',
+    'media.brand.title': 'Brand Communication',
+    'media.brand.desc': 'Building brand influence',
+    'media.brand.alt': 'Brand communication image',
     'media.updates.title': 'Company Updates',
-    'media.updates.desc': 'Share the latest company news and development updates',
+    'media.updates.desc': 'Share latest company news and developments',
+    'media.updates.alt': 'Company updates image',
 
     // Products
     'products.title': 'Product Catalog',
@@ -767,9 +877,3 @@ i18n.registerTranslations('en', {
     'footer.followUs': 'Follow Us',
     'footer.subscribe': 'Follow our social media for latest updates',
 });
-
-// 初始化
-i18n.init();
-
-// 导出全局实例供其他模块使用
-window.i18n = i18n;

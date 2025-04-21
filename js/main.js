@@ -1,3 +1,5 @@
+import { debounce, throttle, isInViewport, smoothScrollTo, getDeviceType } from './utils.js';
+
 // 移动端菜单控制
 const mobileMenuBtn = document.querySelector('.mobile-menu-toggle');
 const nav = document.querySelector('nav');
@@ -5,60 +7,48 @@ const menuItems = document.querySelectorAll('.main-menu > li');
 const hasSubmenu = document.querySelectorAll('.has-submenu');
 const body = document.body;
 
-// 初始化移动端菜单
-function initMobileMenu() {
-    if (!mobileMenuBtn || !nav) return;
+// 导航菜单
+class Navigation {
+    constructor() {
+        this.nav = document.querySelector('nav');
+        this.menuToggle = document.querySelector('.mobile-menu-toggle');
+        this.mainMenu = document.querySelector('.main-menu');
+        this.init();
+    }
 
-    // 移动端菜单按钮点击事件
-    mobileMenuBtn.addEventListener('click', () => {
-        nav.classList.toggle('active');
-        body.classList.toggle('menu-open');
-        mobileMenuBtn.classList.toggle('active');
-    });
+    init() {
+        this.setupEventListeners();
+        this.handleScroll();
+    }
 
-    // 处理子菜单
-    hasSubmenu.forEach(item => {
-        const link = item.querySelector('a');
-        
-        if (link) {
-            link.addEventListener('click', (e) => {
-                if (window.innerWidth <= 992) {
-                    e.preventDefault();
-                    item.classList.toggle('active');
-                    
-                    // 关闭其他打开的子菜单
-                    hasSubmenu.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                }
-            });
+    setupEventListeners() {
+        this.menuToggle.addEventListener('click', () => this.toggleMenu());
+        window.addEventListener('scroll', throttle(() => this.handleScroll(), 100));
+        window.addEventListener('resize', debounce(() => this.handleResize(), 250));
+    }
+
+    toggleMenu() {
+        this.menuToggle.classList.toggle('active');
+        this.mainMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    }
+
+    handleScroll() {
+        const scrollPosition = window.scrollY;
+        if (scrollPosition > 100) {
+            this.nav.classList.add('scrolled');
+        } else {
+            this.nav.classList.remove('scrolled');
         }
-    });
+    }
 
-    // 点击页面其他区域关闭菜单
-    document.addEventListener('click', (e) => {
-        if (window.innerWidth <= 992) {
-            const isClickInside = nav.contains(e.target) || mobileMenuBtn.contains(e.target);
-            
-            if (!isClickInside && nav.classList.contains('active')) {
-                nav.classList.remove('active');
-                body.classList.remove('menu-open');
-                mobileMenuBtn.classList.remove('active');
-            }
+    handleResize() {
+        if (window.innerWidth > 768) {
+            this.menuToggle.classList.remove('active');
+            this.mainMenu.classList.remove('active');
+            document.body.classList.remove('menu-open');
         }
-    });
-
-    // 窗口大小改变时重置菜单状态
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 992) {
-            nav.classList.remove('active');
-            body.classList.remove('menu-open');
-            mobileMenuBtn.classList.remove('active');
-            menuItems.forEach(item => item.classList.remove('active'));
-        }
-    });
+    }
 }
 
 // 产品规格模态框控制
@@ -66,55 +56,45 @@ const specModal = document.getElementById('spec-modal-new');
 const specTables = document.querySelectorAll('.spec-table');
 const closeBtn = document.querySelector('.close-btn');
 
-// 显示指定产品的规格
-function showSpecifications(productId) {
-    if (!specModal) return;
-    
-    specModal.style.display = 'block';
-    
-    // 隐藏所有规格表
-    specTables.forEach(table => {
-        table.style.display = 'none';
-    });
-    
-    // 显示对应产品的规格表
-    const targetTable = document.getElementById(`spec-${productId}`);
-    if (targetTable) {
-        targetTable.style.display = 'table';
+// 产品规格模态框
+class ProductSpecs {
+    constructor() {
+        this.modal = document.getElementById('specModal');
+        this.specTables = document.querySelectorAll('.spec-table');
+        this.closeBtn = document.querySelector('.modal-close');
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        this.closeBtn.addEventListener('click', () => this.closeModal());
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
+        });
+        document.querySelectorAll('[data-spec-trigger]').forEach(button => {
+            button.addEventListener('click', () => this.showSpecifications(button.dataset.specTrigger));
+        });
+    }
+
+    showSpecifications(productId) {
+        this.modal.classList.add('active');
+        this.specTables.forEach(table => {
+            table.style.display = table.id === `specs-${productId}` ? 'block' : 'none';
+        });
+    }
+
+    closeModal() {
+        this.modal.classList.remove('active');
     }
 }
 
-// 初始化规格模态框
-function initSpecModal() {
-    if (!specModal || !closeBtn) return;
-
-    // 关闭按钮点击事件
-    closeBtn.addEventListener('click', () => {
-        specModal.style.display = 'none';
-    });
-
-    // 点击模态框外部关闭
-    window.addEventListener('click', (event) => {
-        if (event.target === specModal) {
-            specModal.style.display = 'none';
-        }
-    });
-
-    // 为所有规格按钮添加点击事件
-    document.querySelectorAll('.spec-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const productId = button.getAttribute('data-product');
-            if (productId) {
-                showSpecifications(productId);
-            }
-        });
-    });
-}
-
-// 页面加载完成后初始化
+// 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    initMobileMenu();
-    initSpecModal();
+    new Navigation();
+    new ProductSpecs();
 });
 
 // 复制主菜单到移动端菜单
@@ -272,3 +252,61 @@ function updateActiveMenuItem() {
 
 // 页面加载完成后更新活动菜单项
 window.addEventListener('load', updateActiveMenuItem);
+
+// 动画效果
+class Animations {
+    constructor() {
+        this.animatedElements = document.querySelectorAll('.animate');
+        this.init();
+    }
+
+    init() {
+        this.setupIntersectionObserver();
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        this.animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+}
+
+// 语言切换
+class LanguageSwitcher {
+    constructor() {
+        this.buttons = document.querySelectorAll('.lang-btn');
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        this.buttons.forEach(button => {
+            button.addEventListener('click', () => this.switchLanguage(button.dataset.lang));
+        });
+    }
+
+    switchLanguage(lang) {
+        // 这里可以调用i18n管理器的切换语言方法
+        console.log(`Switching to ${lang}`);
+    }
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    new Animations();
+    new LanguageSwitcher();
+});

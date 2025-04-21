@@ -9,6 +9,39 @@ class I18nManager {
         this.maxRetries = 3;
         this.retryCount = 0;
         this.retryDelay = 500; // 毫秒
+        this.supportedLanguages = ['zh-CN', 'zh-TW', 'en'];
+        
+        // 通用规格值（不需要翻译的技术参数）
+        this.commonSpecValues = {
+            'spec.portable.input.value': 'AC 220V±15%',
+            'spec.portable.output.value': '3.5kW',
+            'spec.portable.connector.value': 'Type 2',
+            'spec.portable.protection.value': 'IP54',
+            'spec.portable.temperature.value': '-20°C to +50°C',
+            'spec.portable.cable.value': '5m',
+            'spec.portable.certification.value': 'CE/TUV',
+
+            'spec.7kw.input.value': 'AC 220V±15%',
+            'spec.7kw.output.value': '7kW',
+            'spec.7kw.connector.value': 'Type 2',
+            'spec.7kw.protection.value': 'IP65',
+            'spec.7kw.temperature.value': '-30°C to +50°C',
+            'spec.7kw.certification.value': 'CE/TUV',
+
+            'spec.22kw.input.value': 'AC 380V±15%',
+            'spec.22kw.output.value': '11kW/22kW',
+            'spec.22kw.connector.value': 'Type 2',
+            'spec.22kw.protection.value': 'IP65',
+            'spec.22kw.temperature.value': '-30°C to +50°C',
+            'spec.22kw.certification.value': 'CE/TUV',
+
+            'spec.40kw.input.value': 'AC 380V±15%',
+            'spec.40kw.output.value': '20kW-40kW',
+            'spec.40kw.connector.value': 'CCS2/CHAdeMO',
+            'spec.40kw.protection.value': 'IP54',
+            'spec.40kw.temperature.value': '-30°C to +50°C',
+            'spec.40kw.certification.value': 'CE/TUV'
+        };
     }
 
     async init() {
@@ -97,8 +130,7 @@ class I18nManager {
 
     async _preloadTranslations() {
         // 预加载所有语言的翻译
-        const languages = ['zh-CN', 'zh-TW', 'en'];
-        for (const lang of languages) {
+        for (const lang of this.supportedLanguages) {
             if (!this.translations[lang]) {
                 console.warn(`Missing translations for language: ${lang}`);
             }
@@ -107,10 +139,9 @@ class I18nManager {
 
     _validateTranslations() {
         // 验证翻译数据的完整性
-        const languages = ['zh-CN', 'zh-TW', 'en'];
         const missingTranslations = {};
 
-        languages.forEach(lang => {
+        this.supportedLanguages.forEach(lang => {
             if (!this.translations[lang]) {
                 console.error(`Missing translation object for language: ${lang}`);
                 return;
@@ -118,21 +149,21 @@ class I18nManager {
 
             // 收集所有翻译键
             const allKeys = new Set();
-            languages.forEach(l => {
+            this.supportedLanguages.forEach(l => {
                 Object.keys(this.translations[l] || {}).forEach(k => allKeys.add(k));
             });
 
             // 检查每个键是否存在
             missingTranslations[lang] = [];
             allKeys.forEach(key => {
-                if (!this.translations[lang][key]) {
+                if (!this.translations[lang][key] && !this.commonSpecValues[key]) {
                     missingTranslations[lang].push(key);
                 }
             });
         });
 
         // 报告缺失的翻译
-        languages.forEach(lang => {
+        this.supportedLanguages.forEach(lang => {
             if (missingTranslations[lang].length > 0) {
                 console.warn(`Missing translations for ${lang}:`, missingTranslations[lang]);
             }
@@ -220,6 +251,11 @@ class I18nManager {
 
     // 获取翻译
     translate(key, params = {}) {
+        // 首先检查是否是通用规格值
+        if (this.commonSpecValues[key]) {
+            return this.commonSpecValues[key];
+        }
+
         let text = this.translations[this.currentLang]?.[key] 
             || this.translations[this.fallbackLang]?.[key] 
             || key;
@@ -330,7 +366,7 @@ window.i18n = i18n;
 // 注册翻译
 i18n.registerTranslations('zh-CN', {
     // 公司信息
-    'companyShort': 'INTER SKY PROFIT LIMITED',
+    'companyShort': '国际天利有限公司',
     'companyName': '国际天利有限公司',
     
     // 导航菜单
@@ -428,6 +464,10 @@ i18n.registerTranslations('zh-CN', {
     // 页脚
     'footer.quickLinks': '快速链接',
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
+    'footer.description': '专注于新能源科技发展，致力于为客户提供专业的解决方案',
+    'footer.contact': '联系方式',
+    'footer.followUs': '关注我们',
+    'footer.subscribe': '关注我们的社交媒体，获取最新动态',
 
     // 媒体更新
     'media.title': '媒体',
@@ -487,8 +527,13 @@ i18n.registerTranslations('zh-CN', {
     'products.dc.240kw.features.4': '商业充电站首选',
     
     // 团队成员
+    'team.title': '我们的团队',
+    'team.intro': '我们的优势在于我们多元化且敬业的专业团队。每位成员都拥有再生能源、工程和项目管理的独特专业知识，共同协作推动创新和卓越。',
+    'team.ivan.title': '首席执行官 / CEO',
     'team.ivan.desc': '有接近10年地产及6年香港再生能源建设及管理经验',
+    'team.casen.title': '技术总监 / CTO',
     'team.casen.desc': '电力工程开发团队，管理生产业务',
+    'team.ziv.title': '系统架构师 / System Architect',
     'team.ziv.desc': '有多年IT开发及程式经验，同政府机构有合作经验',
 
     // 项目经验
@@ -514,43 +559,6 @@ i18n.registerTranslations('zh-CN', {
     'experience.table.row5.location': '浦东新区两港充电站',
     'experience.table.row5.count': '35',
     'experience.viewMore': '查看更多项目',
-    'experience.table.row6.location': '芮城充电中心',
-    'experience.table.row6.location.en': 'Ruicheng charging center',
-    'experience.table.row6.count': '34',
-    'experience.table.row7.location': '珠海城市职业技术学院',
-    'experience.table.row7.location.en': 'Zhuhai City Vocational and Technical College',
-    'experience.table.row7.count': '26',
-    'experience.table.row8.location': '天河区骏景小学充电站',
-    'experience.table.row8.location.en': 'Tianhe District Junjing Primary School charging station',
-    'experience.table.row8.count': '26',
-    'experience.table.row9.location': '唐华充电站',
-    'experience.table.row9.location.en': 'Tanghua charging station',
-    'experience.table.row9.count': '22',
-    'experience.table.row10.location': '易明充电站',
-    'experience.table.row10.location.en': 'Yiming charging station',
-    'experience.table.row10.count': '21',
-    'experience.table.row11.location': '木雅圣地360KW充电站',
-    'experience.table.row11.location.en': 'Muya Holy Land 360KW charging station',
-    'experience.table.row11.count': '17',
-    'experience.table.row12.location': '宜春畅海苑共享充电桩',
-    'experience.table.row12.location.en': 'Yichun Changhaiyuan shared charging pile',
-    'experience.table.row12.count': '16',
-    'experience.table.row13.location': '平远县上举镇新农村兴建充电站',
-    'experience.table.row13.location.en': 'Pingyuan County Shangju Town New Rural Construction Charging Station',
-    'experience.table.row13.count': '11',
-    'experience.table.row14.location': '云奥泰生物科技',
-    'experience.table.row14.location.en': 'Yunaotai Biotechnology',
-    'experience.table.row14.count': '9',
-    'experience.table.row15.location': '贞丰1号加油站',
-    'experience.table.row15.location.en': 'Zhenfeng No. 1 Gas Station',
-    'experience.table.row15.count': '8',
-
-    // 团队介绍
-    'team.title': '我们的团队',
-    'team.intro': '我们的优势在于我们多元化且敬业的专业团队。每位成员都拥有再生能源、工程和项目管理的独特专业知识，共同协作推动创新和卓越。',
-    'team.ivan.title': '首席执行官 / CEO',
-    'team.casen.title': '技术总监 / CTO',
-    'team.ziv.title': '系统架构师 / System Architect',
 
     // 环保
     'environment.title': '环保',
@@ -570,12 +578,6 @@ i18n.registerTranslations('zh-CN', {
     'technology.smart.title': '智能系统',
     'technology.smart.desc': '运用人工智能技术，打造智能化解决方案',
 
-    // 页脚
-    'footer.description': '专注于新能源科技发展，致力于为客户提供专业的解决方案',
-    'footer.contact': '联系方式',
-    'footer.followUs': '关注我们',
-    'footer.subscribe': '关注我们的社交媒体，获取最新动态',
-
     // 模态框翻译
     'modal.title': '产品规格',
     'modal.close': '×',
@@ -590,58 +592,7 @@ i18n.registerTranslations('zh-CN', {
     'spec.communication': '通信',
     'spec.certification': '认证',
     'spec.cooling': '冷却方式',
-    'spec.cable': '线缆长度',
-    
-    // 规格值翻译（如果需要本地化）
-    'spec.input.value': 'AC 220V±15%',
-    'spec.output.value': '7kW',
-    'spec.connector.value': 'Type 2',
-    'spec.protection.value': 'IP65',
-    'spec.temperature.value': '-30°C to +50°C',
-    'spec.display.value': '4.3英寸LCD',
-    'spec.communication.value': 'WiFi/4G(选配)',
-    'spec.certification.value': 'CE/TUV',
-    'spec.cooling.value': '强制风冷',
-    'spec.cable.value': '5米',
-
-    // AC便携式充电器规格
-    'spec.portable.input.value': 'AC 220V±15%',
-    'spec.portable.output.value': '3.5kW',
-    'spec.portable.connector.value': 'Type 2',
-    'spec.portable.protection.value': 'IP54',
-    'spec.portable.temperature.value': '-20°C to +50°C',
-    'spec.portable.cable.value': '5米',
-    'spec.portable.certification.value': 'CE/TUV',
-
-    // AC 7kW充电器规格
-    'spec.7kw.input.value': 'AC 220V±15%',
-    'spec.7kw.output.value': '7kW',
-    'spec.7kw.connector.value': 'Type 2',
-    'spec.7kw.protection.value': 'IP65',
-    'spec.7kw.temperature.value': '-30°C to +50°C',
-    'spec.7kw.display.value': '4.3英寸LCD',
-    'spec.7kw.communication.value': 'WiFi/4G(选配)',
-    'spec.7kw.certification.value': 'CE/TUV',
-
-    // AC 11kW/22kW充电器规格
-    'spec.22kw.input.value': 'AC 380V±15%',
-    'spec.22kw.output.value': '11kW/22kW',
-    'spec.22kw.connector.value': 'Type 2',
-    'spec.22kw.protection.value': 'IP65',
-    'spec.22kw.temperature.value': '-30°C to +50°C',
-    'spec.22kw.display.value': '7英寸LCD',
-    'spec.22kw.communication.value': 'WiFi/4G/以太网',
-    'spec.22kw.certification.value': 'CE/TUV',
-
-    // DC 20-40kW充电器规格
-    'spec.40kw.input.value': 'AC 380V±15%',
-    'spec.40kw.output.value': '20kW-40kW',
-    'spec.40kw.connector.value': 'CCS2/CHAdeMO',
-    'spec.40kw.protection.value': 'IP54',
-    'spec.40kw.temperature.value': '-30°C to +50°C',
-    'spec.40kw.display.value': '5英寸触摸屏',
-    'spec.40kw.cooling.value': '强制风冷',
-    'spec.40kw.certification.value': 'CE/TUV',
+    'spec.cable': '线缆长度'
 });
 
 i18n.registerTranslations('zh-TW', {
@@ -744,6 +695,10 @@ i18n.registerTranslations('zh-TW', {
     // 页脚
     'footer.quickLinks': '快速鏈接',
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. 保留所有權利。',
+    'footer.description': '專注於新能源科技發展，致力於為客戶提供專業的解決方案',
+    'footer.contact': '聯繫方式',
+    'footer.followUs': '關注我們',
+    'footer.subscribe': '關注我們的社交媒體，獲取最新動態',
 
     // 媒體部分
     'media.title': '媒體',
@@ -803,8 +758,13 @@ i18n.registerTranslations('zh-TW', {
     'products.dc.240kw.features.4': '商業充電站首選',
     
     // 團隊成員
+    'team.title': '我們的團隊',
+    'team.intro': '我們的優勢在於我們多元化且敬業的專業團隊。每位成員都擁有再生能源、工程和項目管理的獨特專業知識，共同協作推動創新和卓越。',
+    'team.ivan.title': '首席執行官 / CEO',
     'team.ivan.desc': '有接近10年地產及6年香港再生能源建設及管理經驗',
+    'team.casen.title': '技術總監 / CTO',
     'team.casen.desc': '電力工程開發團隊，管理生產業務',
+    'team.ziv.title': '系統架構師 / System Architect',
     'team.ziv.desc': '有多年IT開發及程式經驗，同政府機構有合作經驗',
 
     // 項目經驗
@@ -830,43 +790,6 @@ i18n.registerTranslations('zh-TW', {
     'experience.table.row5.location': '浦東新區兩港充電站',
     'experience.table.row5.count': '35',
     'experience.viewMore': '查看更多項目',
-    'experience.table.row6.location': '芮城充電中心',
-    'experience.table.row6.location.en': 'Ruicheng charging center',
-    'experience.table.row6.count': '34',
-    'experience.table.row7.location': '珠海城市職業技術學院',
-    'experience.table.row7.location.en': 'Zhuhai City Vocational and Technical College',
-    'experience.table.row7.count': '26',
-    'experience.table.row8.location': '天河區駿景小學充電站',
-    'experience.table.row8.location.en': 'Tianhe District Junjing Primary School charging station',
-    'experience.table.row8.count': '26',
-    'experience.table.row9.location': '唐華充電站',
-    'experience.table.row9.location.en': 'Tanghua charging station',
-    'experience.table.row9.count': '22',
-    'experience.table.row10.location': '易明充電站',
-    'experience.table.row10.location.en': 'Yiming charging station',
-    'experience.table.row10.count': '21',
-    'experience.table.row11.location': '木雅聖地360KW充電站',
-    'experience.table.row11.location.en': 'Muya Holy Land 360KW charging station',
-    'experience.table.row11.count': '17',
-    'experience.table.row12.location': '宜春暢海苑共享充電樁',
-    'experience.table.row12.location.en': 'Yichun Changhaiyuan shared charging pile',
-    'experience.table.row12.count': '16',
-    'experience.table.row13.location': '平遠縣上舉鎮新農村興建充電站',
-    'experience.table.row13.location.en': 'Pingyuan County Shangju Town New Rural Construction Charging Station',
-    'experience.table.row13.count': '11',
-    'experience.table.row14.location': '雲奧泰生物科技',
-    'experience.table.row14.location.en': 'Yunaotai Biotechnology',
-    'experience.table.row14.count': '9',
-    'experience.table.row15.location': '貞豐1號加油站',
-    'experience.table.row15.location.en': 'Zhenfeng No. 1 Gas Station',
-    'experience.table.row15.count': '8',
-
-    // 團隊介紹
-    'team.title': '我們的團隊',
-    'team.intro': '我們的優勢在於我們多元化且敬業的專業團隊。每位成員都擁有再生能源、工程和項目管理的獨特專業知識，共同協作推動創新和卓越。',
-    'team.ivan.title': '首席執行官 / CEO',
-    'team.casen.title': '技術總監 / CTO',
-    'team.ziv.title': '系統架構師 / System Architect',
 
     // 環保
     'environment.title': '環保',
@@ -886,12 +809,6 @@ i18n.registerTranslations('zh-TW', {
     'technology.smart.title': '智能系統',
     'technology.smart.desc': '運用人工智能技術，打造智能化解決方案',
 
-    // 頁腳
-    'footer.description': '專注於新能源科技發展，致力於為客戶提供專業的解決方案',
-    'footer.contact': '聯繫方式',
-    'footer.followUs': '關注我們',
-    'footer.subscribe': '關注我們的社交媒體，獲取最新動態',
-
     // 模態框翻譯
     'modal.title': '產品規格',
     'modal.close': '×',
@@ -906,58 +823,7 @@ i18n.registerTranslations('zh-TW', {
     'spec.communication': '通信',
     'spec.certification': '認證',
     'spec.cooling': '冷卻方式',
-    'spec.cable': '線纜長度',
-    
-    // 規格值翻譯（如果需要本地化）
-    'spec.input.value': 'AC 220V±15%',
-    'spec.output.value': '7kW',
-    'spec.connector.value': 'Type 2',
-    'spec.protection.value': 'IP65',
-    'spec.temperature.value': '-30°C to +50°C',
-    'spec.display.value': '4.3英寸LCD',
-    'spec.communication.value': 'WiFi/4G(選配)',
-    'spec.certification.value': 'CE/TUV',
-    'spec.cooling.value': '強制風冷',
-    'spec.cable.value': '5米',
-
-    // AC便攜式充電器規格
-    'spec.portable.input.value': 'AC 220V±15%',
-    'spec.portable.output.value': '3.5kW',
-    'spec.portable.connector.value': 'Type 2',
-    'spec.portable.protection.value': 'IP54',
-    'spec.portable.temperature.value': '-20°C to +50°C',
-    'spec.portable.cable.value': '5米',
-    'spec.portable.certification.value': 'CE/TUV',
-
-    // AC 7kW充電器規格
-    'spec.7kw.input.value': 'AC 220V±15%',
-    'spec.7kw.output.value': '7kW',
-    'spec.7kw.connector.value': 'Type 2',
-    'spec.7kw.protection.value': 'IP65',
-    'spec.7kw.temperature.value': '-30°C to +50°C',
-    'spec.7kw.display.value': '4.3-inch LCD',
-    'spec.7kw.communication.value': 'WiFi/4G(選配)',
-    'spec.7kw.certification.value': 'CE/TUV',
-
-    // AC 11kW/22kW充電器規格
-    'spec.22kw.input.value': 'AC 380V±15%',
-    'spec.22kw.output.value': '11kW/22kW',
-    'spec.22kw.connector.value': 'Type 2',
-    'spec.22kw.protection.value': 'IP65',
-    'spec.22kw.temperature.value': '-30°C to +50°C',
-    'spec.22kw.display.value': '7-inch LCD',
-    'spec.22kw.communication.value': 'WiFi/4G/Ethernet',
-    'spec.22kw.certification.value': 'CE/TUV',
-
-    // DC 20-40kW充電器規格
-    'spec.40kw.input.value': 'AC 380V±15%',
-    'spec.40kw.output.value': '20kW-40kW',
-    'spec.40kw.connector.value': 'CCS2/CHAdeMO',
-    'spec.40kw.protection.value': 'IP54',
-    'spec.40kw.temperature.value': '-30°C to +50°C',
-    'spec.40kw.display.value': '5-inch Touch Screen',
-    'spec.40kw.cooling.value': 'Forced Air Cooling',
-    'spec.40kw.certification.value': 'CE/TUV',
+    'spec.cable': '線纜長度'
 });
 
 i18n.registerTranslations('en', {
@@ -1060,6 +926,10 @@ i18n.registerTranslations('en', {
     // Footer
     'footer.quickLinks': 'Quick Links',
     'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
+    'footer.description': 'Focused on new energy technology development, committed to providing professional solutions',
+    'footer.contact': 'Contact',
+    'footer.followUs': 'Follow Us',
+    'footer.subscribe': 'Follow our social media for latest updates',
 
     // Media Section
     'media.title': 'Media',
@@ -1119,8 +989,13 @@ i18n.registerTranslations('en', {
     'products.dc.240kw.features.4': 'Ideal for Commercial Stations',
     
     // Team Members
+    'team.title': 'Our Team',
+    'team.intro': 'Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management.',
+    'team.ivan.title': 'Chief Executive Officer / CEO',
     'team.ivan.desc': 'Nearly 10 years of experience in real estate and 6 years in Hong Kong renewable energy construction and management',
+    'team.casen.title': 'Chief Technology Officer / CTO',
     'team.casen.desc': 'Electrical engineering development & research team, managing production operations',
+    'team.ziv.title': 'System Architect',
     'team.ziv.desc': 'Many years of experience in IT development and programming, with government agency cooperation experience',
 
     // Experience
@@ -1146,43 +1021,6 @@ i18n.registerTranslations('en', {
     'experience.table.row5.location': 'Pudong New Area Lianggang Station',
     'experience.table.row5.count': '35',
     'experience.viewMore': 'View More Projects',
-    'experience.table.row6.location': 'Ruicheng charging center',
-    'experience.table.row6.location.en': 'Ruicheng charging center',
-    'experience.table.row6.count': '34',
-    'experience.table.row7.location': 'Zhuhai City Vocational and Technical College',
-    'experience.table.row7.location.en': 'Zhuhai City Vocational and Technical College',
-    'experience.table.row7.count': '26',
-    'experience.table.row8.location': 'Tianhe District Junjing Primary School charging station',
-    'experience.table.row8.location.en': 'Tianhe District Junjing Primary School charging station',
-    'experience.table.row8.count': '26',
-    'experience.table.row9.location': 'Tanghua charging station',
-    'experience.table.row9.location.en': 'Tanghua charging station',
-    'experience.table.row9.count': '22',
-    'experience.table.row10.location': 'Yiming charging station',
-    'experience.table.row10.location.en': 'Yiming charging station',
-    'experience.table.row10.count': '21',
-    'experience.table.row11.location': 'Muya Holy Land 360KW charging station',
-    'experience.table.row11.location.en': 'Muya Holy Land 360KW charging station',
-    'experience.table.row11.count': '17',
-    'experience.table.row12.location': 'Yichun Changhaiyuan shared charging pile',
-    'experience.table.row12.location.en': 'Yichun Changhaiyuan shared charging pile',
-    'experience.table.row12.count': '16',
-    'experience.table.row13.location': 'Pingyuan County Shangju Town New Rural Construction Charging Station',
-    'experience.table.row13.location.en': 'Pingyuan County Shangju Town New Rural Construction Charging Station',
-    'experience.table.row13.count': '11',
-    'experience.table.row14.location': 'Yunaotai Biotechnology',
-    'experience.table.row14.location.en': 'Yunaotai Biotechnology',
-    'experience.table.row14.count': '9',
-    'experience.table.row15.location': 'Zhenfeng No. 1 Gas Station',
-    'experience.table.row15.location.en': 'Zhenfeng No. 1 Gas Station',
-    'experience.table.row15.count': '8',
-
-    // Team
-    'team.title': 'Our Team',
-    'team.intro': 'Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management.',
-    'team.ivan.title': 'Chief Executive Officer / CEO',
-    'team.casen.title': 'Chief Technology Officer / CTO',
-    'team.ziv.title': 'System Architect',
 
     // Environment
     'environment.title': 'Environment',
@@ -1202,12 +1040,6 @@ i18n.registerTranslations('en', {
     'technology.smart.title': 'Smart Systems',
     'technology.smart.desc': 'Leveraging AI technology to create intelligent solutions',
 
-    // Footer
-    'footer.description': 'Focused on new energy technology development, committed to providing professional solutions',
-    'footer.contact': 'Contact',
-    'footer.followUs': 'Follow Us',
-    'footer.subscribe': 'Follow our social media for latest updates',
-
     // Modal translations
     'modal.title': 'Product Specifications',
     'modal.close': '×',
@@ -1222,56 +1054,5 @@ i18n.registerTranslations('en', {
     'spec.communication': 'Communication',
     'spec.certification': 'Certification',
     'spec.cooling': 'Cooling Method',
-    'spec.cable': 'Cable Length',
-    
-    // Specification value translations (if localization needed)
-    'spec.input.value': 'AC 220V±15%',
-    'spec.output.value': '7kW',
-    'spec.connector.value': 'Type 2',
-    'spec.protection.value': 'IP65',
-    'spec.temperature.value': '-30°C to +50°C',
-    'spec.display.value': '4.3-inch LCD',
-    'spec.communication.value': 'WiFi/4G(Optional)',
-    'spec.certification.value': 'CE/TUV',
-    'spec.cooling.value': 'Forced Air Cooling',
-    'spec.cable.value': '5m',
-
-    // AC Portable Charger specifications
-    'spec.portable.input.value': 'AC 220V±15%',
-    'spec.portable.output.value': '3.5kW',
-    'spec.portable.connector.value': 'Type 2',
-    'spec.portable.protection.value': 'IP54',
-    'spec.portable.temperature.value': '-20°C to +50°C',
-    'spec.portable.cable.value': '5m',
-    'spec.portable.certification.value': 'CE/TUV',
-
-    // AC 7kW Charger specifications
-    'spec.7kw.input.value': 'AC 220V±15%',
-    'spec.7kw.output.value': '7kW',
-    'spec.7kw.connector.value': 'Type 2',
-    'spec.7kw.protection.value': 'IP65',
-    'spec.7kw.temperature.value': '-30°C to +50°C',
-    'spec.7kw.display.value': '4.3-inch LCD',
-    'spec.7kw.communication.value': 'WiFi/4G(Optional)',
-    'spec.7kw.certification.value': 'CE/TUV',
-
-    // AC 22kW Charger specifications
-    'spec.22kw.input.value': 'AC 380V±15%',
-    'spec.22kw.output.value': '11kW/22kW',
-    'spec.22kw.connector.value': 'Type 2',
-    'spec.22kw.protection.value': 'IP65',
-    'spec.22kw.temperature.value': '-30°C to +50°C',
-    'spec.22kw.display.value': '7-inch LCD',
-    'spec.22kw.communication.value': 'WiFi/4G/Ethernet',
-    'spec.22kw.certification.value': 'CE/TUV',
-
-    // DC 40kW Charger specifications
-    'spec.40kw.input.value': 'AC 380V±15%',
-    'spec.40kw.output.value': '20kW-40kW',
-    'spec.40kw.connector.value': 'CCS2/CHAdeMO',
-    'spec.40kw.protection.value': 'IP54',
-    'spec.40kw.temperature.value': '-30°C to +50°C',
-    'spec.40kw.display.value': '5-inch Touch Screen',
-    'spec.40kw.cooling.value': 'Forced Air Cooling',
-    'spec.40kw.certification.value': 'CE/TUV',
+    'spec.cable': 'Cable Length'
 });

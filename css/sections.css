@@ -1,0 +1,433 @@
+/* 新增部分的全局样式 */
+.new-section {
+    --primary-color: #e74c3c;
+    --primary-dark: #c0392b;
+    --white: #ffffff;
+    --light-gray: #f5f5f5;
+    --dark-gray: #333333;
+    --medium-gray: #666666;
+    --border-radius: 5px;
+    --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.new-section > .container,
+.new-section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-left: 120px;
+    padding-right: 120px;
+    box-sizing: border-box;
+}
+
+/* 关于我们 */
+.about-new {
+    padding: 80px 0;
+}
+
+.about-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 300px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+}
+
+.about-text h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.about-text h3 span {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--medium-gray);
+    margin-top: 5px;
+}
+
+.company-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.feature {
+    text-align: center;
+    padding: 20px;
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.feature i {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.awards {
+    flex: 1;
+    min-width: 300px;
+    background-color: var(--light-gray);
+    padding: 30px;
+    border-radius: var(--border-radius);
+}
+
+.awards h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.awards ul {
+    list-style-position: inside;
+}
+
+.awards li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.awards li::before {
+    content: '•';
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* 产品目录 */
+.products-new {
+    padding: 80px 0;
+    background: var(--white);
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: var(--medium-gray);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.product-categories {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 20px;
+}
+
+.category-btn {
+    padding: 12px 30px;
+    margin: 0;
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: var(--border-radius);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.category-btn.active, .category-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.product-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+}
+
+.product-image {
+    height: 200px;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.product-info ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.product-info li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 20px;
+}
+
+.product-info li::before {
+    content: '✓';
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+.spec-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.spec-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* 项目经验 */
+.experience-new {
+    padding: 80px 0;
+}
+
+.project-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.project-card {
+    background-color: var(--white);
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+}
+
+.project-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.project-table {
+    margin-top: 50px;
+}
+
+.project-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.project-table th, .project-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.project-table th {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.project-table tr:nth-child(even) {
+    background-color: var(--light-gray);
+}
+
+.view-more-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 30px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.view-more-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* 团队介绍 */
+.team-new {
+    padding: 80px 0;
+}
+
+.team-intro {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.team-members {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.member-card {
+    background-color: var(--white);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: transform 0.3s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-10px);
+}
+
+.member-image {
+    height: 250px;
+    background-color: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-info {
+    padding: 20px;
+}
+
+.member-info h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.member-info .member-title {
+    font-weight: bold;
+    color: var(--medium-gray);
+    margin-bottom: 10px;
+}
+
+/* 模态框样式 */
+.modal-new {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1002;
+    overflow-y: auto;
+}
+
+.modal-content {
+    background-color: var(--white);
+    margin: 50px auto;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: var(--medium-gray);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--primary-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 992px) {
+    .new-section > .container,
+    .new-section {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+    
+    .about-content {
+        flex-direction: column;
+    }
+    
+    .company-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .new-section > .container,
+    .new-section {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    
+    .company-features {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .project-showcase {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-members {
+        grid-template-columns: 1fr;
+    }
+} 

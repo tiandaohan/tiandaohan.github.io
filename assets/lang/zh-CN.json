@@ -1,0 +1,175 @@
+{
+    "companyName": "国际天利有限公司",
+    "companyShort": "INTER SKY PROFIT LIMITED",
+    "slogan": "绿色能源 · 刷新世界",
+    "sloganEn": "Green power, refresh the world",
+    "hero": {
+        "title": "专业再生能源解决方案提供商",
+        "subtitle": "专注于电动汽车充电站和综合能源系统的设计、生产和安装"
+    },
+    "about": {
+        "title": "关于我们",
+        "content": "我们专注于再生能源产品的生产、分销和工程解决方案。提供批发电动汽车充电站销售以及综合能源系统的建造和维护服务。",
+        "contentEn": "Our company specializes in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.",
+        "awardsTitle": "企业殊荣",
+        "awards": [
+            "2023年 国家级高新技术企业",
+            "2022年 深圳科技创新委员会 - 高新技术企业证书",
+            "2022年 职业健康安全管理体系认证",
+            "2022年 环境管理体系认证",
+            "2022年 质量管理体系认证",
+            "2020年 智慧灯杆产业联盟 - 理事单位",
+            "2019年 中国充电桩协会 - 理事单位"
+        ]
+    },
+    "products": {
+        "title": "产品目录",
+        "subtitle": "Smart EV Charger Catalogue",
+        "categories": {
+            "ac": "交流充电器",
+            "dc": "直流充电器"
+        },
+        "viewSpecs": "查看规格",
+        "items": {
+            "ac-portable": {
+                "name": "AC Portable Charger 3.5kW",
+                "features": [
+                    "便携方便",
+                    "即插即用",
+                    "友好界面",
+                    "安全可靠"
+                ]
+            },
+            "ac-7kw": {
+                "name": "AC Charger 7kW",
+                "features": [
+                    "家用充电器RFID版本",
+                    "Ocpp1.6版本",
+                    "4.3英寸屏幕",
+                    "多语言支持"
+                ]
+            },
+            "ac-22kw": {
+                "name": "AC Charger 11kW/22kW",
+                "features": [
+                    "家用充电器RFID版本",
+                    "Ocpp1.6版本",
+                    "LCD显示屏",
+                    "三相电源输入"
+                ]
+            },
+            "dc-40kw": {
+                "name": "DC Charger 20kW-40kW",
+                "features": [
+                    "Ocpp1.6版本",
+                    "5英寸彩色触摸屏",
+                    "强制风冷",
+                    "多重保护功能"
+                ]
+            },
+            "dc-120kw": {
+                "name": "DC Charger 60kW-120kW",
+                "features": [
+                    "Ocpp1.6版本",
+                    "7英寸彩色触摸屏",
+                    "双充电接口",
+                    "高功率输出"
+                ]
+            },
+            "dc-240kw": {
+                "name": "DC Charger 120kW-240kW",
+                "features": [
+                    "Ocpp1.6版本",
+                    "55英寸大屏幕(可选)",
+                    "超高功率输出",
+                    "商业充电站首选"
+                ]
+            }
+        }
+    },
+    "experience": {
+        "title": "项目经验",
+        "subtitle": "我们的充电站已成功部署在全国多个城市",
+        "projects": [
+            {
+                "name": "上海万达外场新能源园区充电站",
+                "description": "5x 120kW<br>12x 7kW"
+            },
+            {
+                "name": "广州白云区体育馆",
+                "description": "23x 180kW<br>46x 80kW"
+            },
+            {
+                "name": "武汉绿地中心停车场充电站",
+                "description": "420x 7kW"
+            }
+        ],
+        "table": {
+            "location": "地点",
+            "locationEn": "Location",
+            "chargers": "充电桩数目",
+            "viewMore": "查看更多项目",
+            "viewLess": "收起项目"
+        },
+        "additionalProjects": [
+            {
+                "name": "苍南县城新区祥和锦园安置小区",
+                "nameEn": "Xianghe Jinyuan resettlement community",
+                "chargers": "178"
+            },
+            {
+                "name": "锦绣开州充电站",
+                "nameEn": "Jinxiu Kaizhou charging station",
+                "chargers": "169"
+            }
+        ]
+    },
+    "team": {
+        "title": "我们的团队",
+        "intro": "我们的优势在于我们多元化且敬业的专业团队。每位成员都拥有再生能源、工程和项目管理的独特专业知识，共同协作推动创新和卓越。我们致力于培养团队合作和持续改进的文化，确保为客户提供最佳解决方案并为永续的未来做出贡献。",
+        "introEn": "Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management, working collaboratively to drive innovation and excellence."
+    },
+    "contact": {
+        "title": "联系我们",
+        "hkOffice": "香港总部",
+        "szFactory": "深圳工厂",
+        "form": {
+            "name": "您的姓名",
+            "email": "您的邮箱",
+            "phone": "您的电话",
+            "message": "您的留言",
+            "submit": "发送消息",
+            "success": "感谢您的留言！我们会尽快与您联系。"
+        }
+    },
+    "footer": {
+        "quickLinks": "快速链接",
+        "contactUs": "联系方式",
+        "copyright": "© 2023 国际天利有限公司 INTER SKY PROFIT LIMITED. 版权所有"
+    },
+    "nav": {
+        "home": "首页",
+        "focus": "焦点",
+        "newEnergy": "新能源科技",
+        "newMedia": "新媒体",
+        "ai": "AI人工智能",
+        "engineering": "工程系统",
+        "trade": "贸易",
+        "submenu": {
+            "environment": "环保",
+            "technology": "科技",
+            "media": "媒体",
+            "ev": "EV",
+            "esg": "ESG",
+            "solar": "光伏太阳能",
+            "storage": "储能",
+            "evCharging": "EV充电",
+            "thermal": "热交模",
+            "cases": "案例",
+            "shortVideo": "短视频制作",
+            "liveStream": "直播",
+            "transport": "交通系统",
+            "booking": "Booking"
+        }
+    }
+}

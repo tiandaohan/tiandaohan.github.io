@@ -1,0 +1,175 @@
+{
+    "companyName": "INTER SKY PROFIT LIMITED",
+    "companyShort": "INTER SKY PROFIT LIMITED",
+    "slogan": "Green power, refresh the world",
+    "sloganEn": "Green power, refresh the world",
+    "nav": {
+      "home": "Home",
+      "about": "About Us",
+      "products": "Products",
+      "experience": "Projects",
+      "team": "Our Team",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "Professional Renewable Energy Solutions Provider",
+      "subtitle": "Specializing in the design, production and installation of EV charging stations and integrated energy systems"
+    },
+    "about": {
+      "title": "About Us",
+      "content": "We focus on the production, distribution and engineering solutions of renewable energy products. Provide wholesale EV charging station sales and comprehensive energy system construction and maintenance services.",
+      "contentEn": "Our company specializes in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.",
+      "awardsTitle": "Corporate Honors",
+      "awards": [
+        "2023 National High-tech Enterprise",
+        "2022 Shenzhen Science and Technology Innovation Commission - High-tech Enterprise Certificate",
+        "2022 Occupational Health and Safety Management System Certification",
+        "2022 Environmental Management System Certification",
+        "2022 Quality Management System Certification",
+        "2020 Smart Light Pole Industry Alliance - Council Member",
+        "2019 China Charging Pile Association - Council Member"
+      ]
+    },
+    "products": {
+      "title": "Products",
+      "subtitle": "Smart EV Charger Catalogue",
+      "categories": {
+        "ac": "AC Charger",
+        "dc": "DC Charger"
+      },
+      "viewSpecs": "View Specifications",
+      "items": {
+        "ac-portable": {
+          "name": "AC Portable Charger 3.5kW",
+          "features": [
+            "Portable and convenient",
+            "Plug and play",
+            "User-friendly interface",
+            "Safe and reliable"
+          ]
+        },
+        "ac-7kw": {
+          "name": "AC Charger 7kW",
+          "features": [
+            "Home charger RFID version",
+            "Ocpp1.6 version",
+            "4.3-inch screen",
+            "Multi-language support"
+          ]
+        },
+        "ac-22kw": {
+          "name": "AC Charger 11kW/22kW",
+          "features": [
+            "Home charger RFID version",
+            "Ocpp1.6 version",
+            "LCD display",
+            "Three-phase power input"
+          ]
+        },
+        "dc-40kw": {
+          "name": "DC Charger 20kW-40kW",
+          "features": [
+            "Ocpp1.6 version",
+            "5-inch color touch screen",
+            "Forced air cooling",
+            "Multiple protection functions"
+          ]
+        },
+        "dc-120kw": {
+          "name": "DC Charger 60kW-120kW",
+          "features": [
+            "Ocpp1.6 version",
+            "7-inch color touch screen",
+            "Dual charging interface",
+            "High power output"
+          ]
+        },
+        "dc-240kw": {
+          "name": "DC Charger 120kW-240kW",
+          "features": [
+            "Ocpp1.6 version",
+            "55-inch large screen (optional)",
+            "Ultra-high power output",
+            "Preferred for commercial charging stations"
+          ]
+        }
+      }
+    },
+    "experience": {
+      "title": "Project Experience",
+      "subtitle": "Our charging stations have been successfully deployed in many cities across the country",
+      "projects": [
+        {
+          "name": "Shanghai Wanda New Energy Park Charging Station",
+          "description": "5x 120kW<br>12x 7kW"
+        },
+        {
+          "name": "Guangzhou Baiyun District Gymnasium",
+          "description": "23x 180kW<br>46x 80kW"
+        },
+        {
+          "name": "Wuhan Greenland Center Parking Lot Charging Station",
+          "description": "420x 7kW"
+        }
+      ],
+      "table": {
+        "location": "Location",
+        "locationEn": "Location",
+        "chargers": "Number of Chargers",
+        "viewMore": "View More Projects",
+        "viewLess": "View Less"
+      },
+      "additionalProjects": [
+        {
+          "name": "Xianghe Jinyuan Resettlement Community",
+          "nameEn": "Xianghe Jinyuan resettlement community",
+          "chargers": "178"
+        },
+        {
+          "name": "Jinxiu Kaizhou Charging Station",
+          "nameEn": "Jinxiu Kaizhou charging station",
+          "chargers": "169"
+        }
+      ]
+    },
+    "team": {
+      "title": "Our Team",
+      "intro": "Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management, working collaboratively to drive innovation and excellence. We are committed to fostering a culture of teamwork and continuous improvement to ensure we deliver the best solutions to our clients and contribute to a sustainable future.",
+      "introEn": "Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management, working collaboratively to drive innovation and excellence.",
+      "members": [
+        {
+          "name": "Ivan Wong",
+          "description": "Nearly 10 years of experience in real estate and 6 years of experience in Hong Kong renewable energy construction and management",
+          "descriptionEn": "Nearly 10 years of experience in real estate and 6 years of experience in Hong Kong renewable energy construction and management"
+        },
+        {
+          "name": "Casen Cao",
+          "description": "Electrical engineering development & research team, managing production operations",
+          "descriptionEn": "Electrical engineering development & research team, managing production operations"
+        },
+        {
+          "name": "Ziv Cheng",
+          "description": "Many years of experience in IT development and programming, and experience in cooperation with government agencies",
+          "descriptionEn": "Many years of experience in IT development and programming, and experience in cooperation with government agencies"
+        }
+      ]
+    },
+    "contact": {
+      "title": "Contact Us",
+      "hkOffice": "Hong Kong Headquarters",
+      "szFactory": "Shenzhen Factory",
+      "form": {
+        "name": "Your Name",
+        "email": "Your Email",
+        "phone": "Your Phone",
+        "message": "Your Message",
+        "submit": "Send Message",
+        "success": "Thank you for your message! We will contact you soon."
+      }
+    },
+    "footer": {
+      "quickLinks": "Quick Links",
+      "contactUs": "Contact Us",
+      "copyright": "© 2023 INTER SKY PROFIT LIMITED. All Rights Reserved"
+    }
+  }

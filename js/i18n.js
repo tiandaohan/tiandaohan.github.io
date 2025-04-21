@@ -1,597 +1,775 @@
-// 多语言支持
-const translations = {
-    'zh-CN': {
-        'companyShort': 'INTER SKY PROFIT LIMITED',
-        'companyName': '国际天利有限公司',
-        'nav.home': '首页',
-        'nav.submenu.environment': '环保',
-        'nav.submenu.technology': '科技',
-        'nav.submenu.media': '媒体',
-        'nav.focus': '焦点',
-        'nav.submenu.ev': 'EV',
-        'nav.submenu.esg': 'ESG',
-        'nav.newEnergy': '新能源科技',
-        'nav.submenu.solar': '光伏为易能',
-        'nav.submenu.storage': '储能',
-        'nav.submenu.evCharging': 'EV充电',
-        'nav.submenu.thermal': '冷热交换',
-        'nav.submenu.cases': '案例',
-        'nav.newMedia': '新媒体',
-        'nav.submenu.shortVideo': '短视频制作',
-        'nav.submenu.liveStream': '直播',
-        'nav.ai': 'AI人工智能',
-        'nav.engineering': '工程系统',
-        'nav.submenu.transport': '交通系统',
-        'nav.submenu.booking': '预约系统',
-        'nav.trade': '贸易',
-        'nav.contact': '联系我们',
-        'slogan': '绿色能源 · 刷新世界',
-        'hero.title': '专业再生能源解决方案提供商',
-        'hero.subtitle': '专注于电动汽车充电站和综合能源系统的设计、生产和安装',
-        'about.title': '关于我们',
-        'about.content': '我们专注于再生能源产品的生产、分销和工程解决方案。提供批发电动汽车充电站销售以及综合能源系统的建造和维护服务。',
-        'about.content.en': 'Our company specializes in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.',
-        'about.awardsTitle': '企业殊荣',
-        'about.feature.certification.title': '专业认证',
-        'about.feature.certification.desc': '多项国际认证，品质保证',
-        'about.feature.support.title': '技术支持',
-        'about.feature.support.desc': '24/7全天候技术支持',
-        'about.feature.global.title': '全球服务',
-        'about.feature.global.desc': '覆盖亚太地区主要市场',
-        'about.awards.title': '企业殊荣',
-        'about.awards.2023': '2023年 国家级高新技术企业',
-        'about.awards.2022.1': '2022年 深圳科技创新委员会 - 高新技术企业证书',
-        'about.awards.2022.2': '2022年 职业健康安全管理体系认证',
-        'about.awards.2022.3': '2022年 环境管理体系认证',
-        'about.awards.2022.4': '2022年 质量管理体系认证',
-        'about.awards.2020': '2020年 智慧灯杆产业联盟 - 理事单位',
-        'about.awards.2019': '2019年 中国充电桩协会 - 理事单位',
-        'products.title': '产品目录',
-        'products.subtitle': '智能电动汽车充电器目录',
-        'products.categories.ac': '交流充电器',
-        'products.categories.dc': '直流充电器',
-        'products.viewSpecs': '查看规格',
-        'contact.title': '联系我们',
-        'contact.address': '地址：香港九龙湾宏开道8号',
-        'contact.phone': '电话：+852 1234 5678',
-        'contact.email': '邮箱：info@intersky.com',
-        'contact.form.name': '姓名',
-        'contact.form.email': '邮箱',
-        'contact.form.message': '留言',
-        'contact.form.submit': '发送',
-        'footer.quickLinks': '快速链接',
-        'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
-        'environment.title': '环保',
-        'environment.project.title': '环保项目展示',
-        'environment.project.desc': '我们致力于提供环保解决方案，推动可持续发展',
-        'environment.tech.title': '环保技术',
-        'environment.tech.desc': '采用先进技术，实现资源的高效利用',
-        'technology.title': '科技',
-        'technology.innovation.title': '科技创新',
-        'technology.innovation.desc': '持续创新，引领行业发展',
-        'technology.rd.title': '技术研发',
-        'technology.rd.desc': '专业团队，专注研发',
-        'media.title': '媒体',
-        'media.news.title': '媒体报道',
-        'media.news.desc': '关注行业动态，传播企业声音',
-        'media.brand.title': '品牌传播',
-        'media.brand.desc': '打造品牌影响力',
-        'contact.info.title': '联系方式',
-        'contact.form.title': '在线留言',
-        'contact.success': '消息已发送成功！',
-        'footer.contact': '联系方式',
-        'env.title': '环保',
-        'env.subtitle': '环保项目展示',
-        'env.tech': '环保技术',
-        'env.description': '致力于环保技术的研发与应用',
-        'tech.title': '科技',
-        'tech.subtitle': '科技创新',
-        'tech.rd': '技术研发',
-        'tech.description': '推动技术创新，引领行业发展',
-        'media.subtitle': '媒体报道',
-        'media.brand': '品牌传播',
-        'media.description': '最新动态与媒体资讯',
-        'contact.success': '消息已发送成功！',
-        'footer.quicklinks': '快速链接',
-        'footer.copyright': '© 2024 Intersky. 保留所有权利。',
-        'construction.title': '页面建设中',
-        'construction.message': '我们正在努力完善相关内容，敬请期待！',
-        'title.ai': '国际天利有限公司 - AI人工智能',
-        'title.trade': '国际天利有限公司 - 贸易',
-        'nav.about': '关于我们',
-        'nav.products': '产品目录',
-        'nav.experience': '项目经验',
-        'nav.team': '团队介绍',
-        'nav.submenu.food': '餐饮车',
-        'contact.address.label': '公司地址',
-        'contact.phone.label': '联系电话',
-        'contact.email.label': '电子邮箱',
-        'contact.hours.label': '工作时间',
-        'contact.hours.value': '周一至周五: 9:00 - 18:00',
-        'slogan.ai': '智能创新 · 引领未来',
-        'hero.title.ai': 'AI人工智能',
-        'hero.subtitle.ai': '为企业提供智能化转型升级服务',
-        'slogan.trade': '全球贸易 · 专业服务',
-        'hero.title.trade': '国际贸易',
-        'hero.subtitle.trade': '提供全方位的国际贸易解决方案',
-        'title.home': '国际天利有限公司',
-        'about.companyName': '国际天利有限公司',
-        'about.companyShort': 'INTER SKY PROFIT LIMITED',
-        'nav.environment': '环保',
-        'nav.technology': '科技',
-        'nav.media': '媒体',
-        'nav.submenu.about': '关于我们',
-        'nav.submenu.products': '产品目录',
-        'nav.submenu.experience': '项目经验',
-        'nav.submenu.team': '团队介绍',
-        'nav.submenu.transport': '交通系统',
-        'nav.submenu.food': '餐饮车',
-        'lang.zh-CN': '简体',
-        'lang.zh-TW': '繁體',
-        'lang.en': 'EN',
-        'focus.slogan': '绿色科技 · 智慧能源',
-        'focus.title': '焦点',
-        'focus.subtitle': '关注新能源与可持续发展',
-        'focus.ev.tech.title': 'EV技术',
-        'focus.ev.tech.desc': '电动汽车技术研发与应用',
-        'focus.ev.charging.title': '充电设施',
-        'focus.ev.charging.desc': '智能充电站建设与运营',
-        'focus.ev.battery.title': '电池技术',
-        'focus.ev.battery.desc': '高性能电池研发与生产',
-        'newEnergy.cases.title': '成功案例',
-        'newEnergy.cases.solar.title': '光伏项目',
-        'newEnergy.cases.solar.desc': '大型光伏电站建设案例',
-        'newEnergy.cases.storage.title': '储能项目',
-        'newEnergy.cases.storage.desc': '储能系统应用案例',
-        'newEnergy.cases.charging.title': '充电站项目',
-        'newEnergy.cases.charging.desc': '充电站建设运营案例',
-        'engineering.cases.title': '案例',
-        'engineering.case1.title': '案例1',
-        'engineering.case1.desc': '描述案例1的内容和特点',
-        'engineering.case2.title': '案例2',
-        'engineering.case2.desc': '描述案例2的内容和特点',
-        'products.ac.portable.title': 'AC便携式充电器',
-        'products.ac.portable.features.1': '便携方便',
-        'products.ac.portable.features.2': '即插即用',
-        'products.ac.portable.features.3': '友好界面',
-        'products.ac.portable.features.4': '安全可靠',
-        'experience.title': '项目经验',
-        'experience.subtitle': '我们的充电站已成功部署在全国多个城市',
-        'experience.project1.title': '上海万达外场新能源园区充电站',
-        'experience.project1.desc': '5x 120kW\n12x 7kW',
-        'experience.project2.title': '广州白云区体育馆',
-        'experience.project2.desc': '23x 180kW\n46x 80kW',
-        'experience.project3.title': '武汉绿地中心停车场充电站',
-        'experience.project3.desc': '420x 7kW',
-        'experience.table.header.location': '地点',
-        'experience.table.header.location.en': 'Location',
-        'experience.table.header.count': '充电桩数目',
-        'experience.viewMore': '查看更多项目',
-        'environment.sustainable.title': '可持续发展',
-        'environment.sustainable.desc': '通过创新技术和解决方案，推动环保事业可持续发展',
-        'technology.smart.title': '智能系统',
-        'technology.smart.desc': '运用人工智能技术，打造智能化解决方案'
-    },
-    'zh-TW': {
-        'companyShort': 'INTER SKY PROFIT LIMITED',
-        'companyName': '國際天利有限公司',
-        'nav.home': '首頁',
-        'nav.submenu.environment': '環保',
-        'nav.submenu.technology': '科技',
-        'nav.submenu.media': '媒體',
-        'nav.focus': '焦點',
-        'nav.submenu.ev': 'EV',
-        'nav.submenu.esg': 'ESG',
-        'nav.newEnergy': '新能源科技',
-        'nav.submenu.solar': '光伏為易能',
-        'nav.submenu.storage': '儲能',
-        'nav.submenu.evCharging': 'EV充電',
-        'nav.submenu.thermal': '冷熱交換',
-        'nav.submenu.cases': '案例',
-        'nav.newMedia': '新媒體',
-        'nav.submenu.shortVideo': '短視頻製作',
-        'nav.submenu.liveStream': '直播',
-        'nav.ai': 'AI人工智能',
-        'nav.engineering': '工程系統',
-        'nav.submenu.transport': '交通系統',
-        'nav.submenu.booking': '預約系統',
-        'nav.trade': '貿易',
-        'nav.contact': '聯繫我們',
-        'slogan': '綠色能源 · 刷新世界',
-        'hero.title': '專業再生能源解決方案提供商',
-        'hero.subtitle': '專注於電動汽車充電站和綜合能源系統的設計、生產和安裝',
-        'about.title': '關於我們',
-        'about.content': '我們專注於再生能源產品的生產、分銷和工程解決方案。提供批發電動汽車充電站銷售以及綜合能源系統的建造和維護服務。',
-        'about.content.en': 'Our company specializes in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.',
-        'about.awardsTitle': '企業殊榮',
-        'about.feature.certification.title': '專業認證',
-        'about.feature.certification.desc': '多項國際認證，品質保證',
-        'about.feature.support.title': '技術支持',
-        'about.feature.support.desc': '24/7全天候技術支持',
-        'about.feature.global.title': '全球服務',
-        'about.feature.global.desc': '覆蓋亞太地區主要市場',
-        'about.awards.title': '企業殊榮',
-        'about.awards.2023': '2023年 國家級高新技術企業',
-        'about.awards.2022.1': '2022年 深圳科技創新委員會 - 高新技術企業證書',
-        'about.awards.2022.2': '2022年 職業健康安全管理體系認證',
-        'about.awards.2022.3': '2022年 環境管理體系認證',
-        'about.awards.2022.4': '2022年 質量管理體系認證',
-        'about.awards.2020': '2020年 智慧燈桿產業聯盟 - 理事單位',
-        'about.awards.2019': '2019年 中國充電樁協會 - 理事單位',
-        'products.title': '產品目錄',
-        'products.subtitle': '智能電動汽車充電器目錄',
-        'products.categories.ac': '交流充電器',
-        'products.categories.dc': '直流充電器',
-        'products.viewSpecs': '查看規格',
-        'contact.title': '聯繫我們',
-        'contact.address': '地址：香港九龍灣宏開道8號',
-        'contact.phone': '電話：+852 1234 5678',
-        'contact.email': '郵箱：info@intersky.com',
-        'contact.form.name': '姓名',
-        'contact.form.email': '郵箱',
-        'contact.form.message': '留言',
-        'contact.form.submit': '發送',
-        'footer.quickLinks': '快速連結',
-        'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
-        'environment.title': '環保',
-        'environment.project.title': '環保項目展示',
-        'environment.project.desc': '我們致力於提供環保解決方案，推動可持續發展',
-        'environment.tech.title': '環保技術',
-        'environment.tech.desc': '採用先進技術，實現資源的高效利用',
-        'technology.title': '科技',
-        'technology.innovation.title': '科技創新',
-        'technology.innovation.desc': '持續創新，引領行業發展',
-        'technology.rd.title': '技術研發',
-        'technology.rd.desc': '專業團隊，專注研發',
-        'media.title': '媒體',
-        'media.news.title': '媒體報導',
-        'media.news.desc': '關注行業動態，傳播企業聲音',
-        'media.brand.title': '品牌傳播',
-        'media.brand.desc': '打造品牌影響力',
-        'contact.info.title': '聯繫方式',
-        'contact.form.title': '在線留言',
-        'contact.success': '消息已發送成功！',
-        'footer.contact': '聯繫方式',
-        'env.title': '環保',
-        'env.subtitle': '環保項目展示',
-        'env.tech': '環保技術',
-        'env.description': '致力於環保技術的研發與應用',
-        'tech.title': '科技',
-        'tech.subtitle': '科技創新',
-        'tech.rd': '技術研發',
-        'tech.description': '推動技術創新，引領行業發展',
-        'media.subtitle': '媒體報導',
-        'media.brand': '品牌傳播',
-        'media.description': '最新動態與媒體資訊',
-        'contact.success': '消息已發送成功！',
-        'footer.quicklinks': '快速連結',
-        'footer.copyright': '© 2024 Intersky. 保留所有權利。',
-        'construction.title': '頁面建設中',
-        'construction.message': '我們正在努力完善相關內容，敬請期待！',
-        'title.ai': '國際天利有限公司 - AI人工智能',
-        'title.trade': '國際天利有限公司 - 貿易',
-        'nav.about': '關於我們',
-        'nav.products': '產品目錄',
-        'nav.experience': '項目經驗',
-        'nav.team': '團隊介紹',
-        'nav.submenu.food': '餐飲車',
-        'contact.address.label': '公司地址',
-        'contact.phone.label': '聯繫電話',
-        'contact.email.label': '電子郵箱',
-        'contact.hours.label': '工作時間',
-        'contact.hours.value': '週一至週五: 9:00 - 18:00',
-        'slogan.ai': '智能創新 · 引領未來',
-        'hero.title.ai': 'AI人工智能',
-        'hero.subtitle.ai': '為企業提供智能化轉型升級服務',
-        'slogan.trade': '全球貿易 · 專業服務',
-        'hero.title.trade': '國際貿易',
-        'hero.subtitle.trade': '提供全方位的國際貿易解決方案',
-        'title.home': '國際天利有限公司',
-        'about.companyName': '國際天利有限公司',
-        'about.companyShort': 'INTER SKY PROFIT LIMITED',
-        'nav.environment': '環保',
-        'nav.technology': '科技',
-        'nav.media': '媒體',
-        'nav.submenu.about': '關於我們',
-        'nav.submenu.products': '產品目錄',
-        'nav.submenu.experience': '項目經驗',
-        'nav.submenu.team': '團隊介紹',
-        'nav.submenu.transport': '交通系統',
-        'nav.submenu.food': '餐飲車',
-        'lang.zh-CN': '简体',
-        'lang.zh-TW': '繁體',
-        'lang.en': 'EN',
-        'focus.slogan': '綠色科技 · 智慧能源',
-        'focus.title': '焦點',
-        'focus.subtitle': '關注新能源與可持續發展',
-        'focus.ev.tech.title': 'EV技術',
-        'focus.ev.tech.desc': '電動汽車技術研發與應用',
-        'focus.ev.charging.title': '充電設施',
-        'focus.ev.charging.desc': '智能充電站建設與運營',
-        'focus.ev.battery.title': '電池技術',
-        'focus.ev.battery.desc': '高性能電池研發與生產',
-        'newEnergy.cases.title': '成功案例',
-        'newEnergy.cases.solar.title': '光伏項目',
-        'newEnergy.cases.solar.desc': '大型光伏電站建設案例',
-        'newEnergy.cases.storage.title': '儲能項目',
-        'newEnergy.cases.storage.desc': '儲能系統應用案例',
-        'newEnergy.cases.charging.title': '充電站項目',
-        'newEnergy.cases.charging.desc': '充電站建設運營案例',
-        'engineering.cases.title': '案例',
-        'engineering.case1.title': '案例1',
-        'engineering.case1.desc': '描述案例1的內容和特點',
-        'engineering.case2.title': '案例2',
-        'engineering.case2.desc': '描述案例2的內容和特點',
-        'products.ac.portable.title': 'AC便攜式充電器',
-        'products.ac.portable.features.1': '便攜方便',
-        'products.ac.portable.features.2': '即插即用',
-        'products.ac.portable.features.3': '友好界面',
-        'products.ac.portable.features.4': '安全可靠',
-        'experience.title': '項目經驗',
-        'experience.subtitle': '我們的充電站已成功部署在全國多個城市',
-        'experience.project1.title': '上海萬達外場新能源園區充電站',
-        'experience.project1.desc': '5x 120kW\n12x 7kW',
-        'experience.project2.title': '廣州白雲區體育館',
-        'experience.project2.desc': '23x 180kW\n46x 80kW',
-        'experience.project3.title': '武漢綠地中心停車場充電站',
-        'experience.project3.desc': '420x 7kW',
-        'experience.table.header.location': '地點',
-        'experience.table.header.location.en': 'Location',
-        'experience.table.header.count': '充電樁數目',
-        'experience.viewMore': '查看更多項目',
-        'environment.sustainable.title': '可持續發展',
-        'environment.sustainable.desc': '通過創新技術和解決方案，推動環保事業可持續發展',
-        'technology.smart.title': '智能系統',
-        'technology.smart.desc': '運用人工智能技術，打造智能化解決方案'
-    },
-    'en': {
-        'companyShort': 'INTER SKY PROFIT LIMITED',
-        'companyName': 'International Sky Profit Limited',
-        'nav.home': 'Home',
-        'nav.submenu.environment': 'Environment',
-        'nav.submenu.technology': 'Technology',
-        'nav.submenu.media': 'Media',
-        'nav.focus': 'Focus',
-        'nav.submenu.ev': 'EV',
-        'nav.submenu.esg': 'ESG',
-        'nav.newEnergy': 'New Energy',
-        'nav.submenu.solar': 'Solar Energy',
-        'nav.submenu.storage': 'Energy Storage',
-        'nav.submenu.evCharging': 'EV Charging',
-        'nav.submenu.thermal': 'Thermal Exchange',
-        'nav.submenu.cases': 'Cases',
-        'nav.newMedia': 'New Media',
-        'nav.submenu.shortVideo': 'Short Video',
-        'nav.submenu.liveStream': 'Live Stream',
-        'nav.ai': 'AI',
-        'nav.engineering': 'Engineering',
-        'nav.submenu.transport': 'Transport System',
-        'nav.submenu.booking': 'Booking System',
-        'nav.trade': 'Trade',
-        'nav.contact': 'Contact Us',
-        'slogan': 'Green Energy · Refresh the World',
-        'hero.title': 'Professional Renewable Energy Solutions Provider',
-        'hero.subtitle': 'Specializing in the design, production and installation of electric vehicle charging stations and integrated energy systems',
-        'about.title': 'About Us',
-        'about.content': 'We specialize in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.',
-        'about.content.en': 'Our company specializes in the production and distribution of renewable energy products. We provide engineering solutions and platform integration while offering wholesale charging station sales and comprehensive energy system construction and maintenance services.',
-        'about.awardsTitle': 'Corporate Honors',
-        'about.feature.certification.title': 'Professional Certification',
-        'about.feature.certification.desc': 'Multiple international certifications, quality guaranteed',
-        'about.feature.support.title': 'Technical Support',
-        'about.feature.support.desc': '24/7 technical support',
-        'about.feature.global.title': 'Global Service',
-        'about.feature.global.desc': 'Covering major markets in Asia Pacific',
-        'about.awards.title': 'Corporate Honors',
-        'about.awards.2023': '2023 National High-Tech Enterprise',
-        'about.awards.2022.1': '2022 Shenzhen Science and Technology Innovation Commission - High-Tech Enterprise Certificate',
-        'about.awards.2022.2': '2022 Occupational Health and Safety Management System Certification',
-        'about.awards.2022.3': '2022 Environmental Management System Certification',
-        'about.awards.2022.4': '2022 Quality Management System Certification',
-        'about.awards.2020': '2020 Smart Street Light Industry Alliance - Council Member',
-        'about.awards.2019': '2019 China Charging Pile Association - Council Member',
-        'products.title': 'Product Catalog',
-        'products.subtitle': 'Smart EV Charger Catalogue',
-        'products.categories.ac': 'AC Charger',
-        'products.categories.dc': 'DC Charger',
-        'products.viewSpecs': 'View Specifications',
-        'contact.title': 'Contact Us',
-        'contact.address': 'Address: 8 Wang Hoi Road, Kowloon Bay, Hong Kong',
-        'contact.phone': 'Tel: +852 1234 5678',
-        'contact.email': 'Email: info@intersky.com',
-        'contact.form.name': 'Name',
-        'contact.form.email': 'Email',
-        'contact.form.message': 'Message',
-        'contact.form.submit': 'Send',
-        'footer.quickLinks': 'Quick Links',
-        'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
-        'environment.title': 'Environment',
-        'environment.project.title': 'Environmental Projects',
-        'environment.project.desc': 'We are committed to providing environmental solutions and promoting sustainable development',
-        'environment.tech.title': 'Environmental Technology',
-        'environment.tech.desc': 'Adopting advanced technology for efficient resource utilization',
-        'technology.title': 'Technology',
-        'technology.innovation.title': 'Technology Innovation',
-        'technology.innovation.desc': 'Continuous innovation, leading industry development',
-        'technology.rd.title': 'R&D',
-        'technology.rd.desc': 'Professional team, focused on research and development',
-        'media.title': 'Media',
-        'media.news.title': 'Media Coverage',
-        'media.news.desc': 'Following industry trends, spreading corporate voice',
-        'media.brand.title': 'Brand Communication',
-        'media.brand.desc': 'Building brand influence',
-        'contact.info.title': 'Contact Information',
-        'contact.form.title': 'Online Message',
-        'contact.success': 'Message sent successfully!',
-        'footer.contact': 'Contact Info',
-        'env.title': 'Environment',
-        'env.subtitle': 'Environmental Projects',
-        'env.tech': 'Environmental Technology',
-        'env.description': 'Dedicated to environmental technology R&D and application',
-        'tech.title': 'Technology',
-        'tech.subtitle': 'Technological Innovation',
-        'tech.rd': 'R&D',
-        'tech.description': 'Driving innovation and leading industry development',
-        'media.subtitle': 'Media Coverage',
-        'media.brand': 'Brand Communication',
-        'media.description': 'Latest updates and media information',
-        'contact.success': 'Message sent successfully!',
-        'footer.quicklinks': 'Quick Links',
-        'footer.copyright': '© 2024 Intersky. All rights reserved.',
-        'construction.title': 'Under Construction',
-        'construction.message': 'We are working hard to complete the content. Stay tuned!',
-        'title.ai': 'INTER SKY PROFIT LIMITED - AI Technology',
-        'title.trade': 'INTER SKY PROFIT LIMITED - International Trade',
-        'nav.about': 'About Us',
-        'nav.products': 'Products',
-        'nav.experience': 'Experience',
-        'nav.team': 'Our Team',
-        'nav.submenu.food': 'Food Truck',
-        'contact.address.label': 'Address',
-        'contact.phone.label': 'Phone',
-        'contact.email.label': 'Email',
-        'contact.hours.label': 'Business Hours',
-        'contact.hours.value': 'Monday - Friday: 9:00 AM - 6:00 PM',
-        'slogan.ai': 'Smart Innovation · Leading the Future',
-        'hero.title.ai': 'AI Technology',
-        'hero.subtitle.ai': 'Providing Enterprise Intelligence Transformation Services',
-        'slogan.trade': 'Global Trade · Professional Service',
-        'hero.title.trade': 'International Trade',
-        'hero.subtitle.trade': 'Comprehensive International Trade Solutions',
-        'title.home': 'INTER SKY PROFIT LIMITED',
-        'about.companyName': 'INTER SKY PROFIT LIMITED',
-        'about.companyShort': 'INTER SKY PROFIT LIMITED',
-        'nav.environment': 'Environment',
-        'nav.technology': 'Technology',
-        'nav.media': 'Media',
-        'nav.submenu.about': 'About Us',
-        'nav.submenu.products': 'Products',
-        'nav.submenu.experience': 'Experience',
-        'nav.submenu.team': 'Our Team',
-        'nav.submenu.transport': 'Transport System',
-        'nav.submenu.booking': 'Booking System',
-        'nav.submenu.food': 'Food Truck',
-        'nav.contact': 'Contact Us',
-        'lang.zh-CN': 'Simplified',
-        'lang.zh-TW': 'Traditional',
-        'lang.en': 'EN',
-        'focus.slogan': 'Green Technology · Smart Energy',
-        'focus.title': 'Focus',
-        'focus.subtitle': 'Focus on New Energy and Sustainable Development',
-        'focus.ev.tech.title': 'EV Technology',
-        'focus.ev.tech.desc': 'Electric Vehicle Technology R&D and Application',
-        'focus.ev.charging.title': 'Charging Facilities',
-        'focus.ev.charging.desc': 'Smart Charging Station Construction and Operation',
-        'focus.ev.battery.title': 'Battery Technology',
-        'focus.ev.battery.desc': 'High-performance Battery R&D and Production',
-        'newEnergy.cases.title': 'Success Cases',
-        'newEnergy.cases.solar.title': 'Solar Project',
-        'newEnergy.cases.solar.desc': 'Large-scale Solar Power Station Construction Case',
-        'newEnergy.cases.storage.title': 'Energy Storage Project',
-        'newEnergy.cases.storage.desc': 'Energy Storage System Application Case',
-        'newEnergy.cases.charging.title': 'Charging Station Project',
-        'newEnergy.cases.charging.desc': 'Charging Station Construction and Operation Case',
-        'engineering.cases.title': 'Cases',
-        'engineering.case1.title': 'Case 1',
-        'engineering.case1.desc': 'Description of case 1 content and features',
-        'engineering.case2.title': 'Case 2',
-        'engineering.case2.desc': 'Description of case 2 content and features',
-        'products.ac.portable.title': 'AC Portable Charger',
-        'products.ac.portable.features.1': 'Portable & Convenient',
-        'products.ac.portable.features.2': 'Plug and Play',
-        'products.ac.portable.features.3': 'User-friendly Interface',
-        'products.ac.portable.features.4': 'Safe and Reliable',
-        'experience.title': 'Project Experience',
-        'experience.subtitle': 'Our charging stations have been successfully deployed in multiple cities nationwide',
-        'experience.project1.title': 'Shanghai Wanda New Energy Park Charging Station',
-        'experience.project1.desc': '5x 120kW\n12x 7kW',
-        'experience.project2.title': 'Guangzhou Baiyun District Stadium',
-        'experience.project2.desc': '23x 180kW\n46x 80kW',
-        'experience.project3.title': 'Wuhan Greenland Center Parking Lot Charging Station',
-        'experience.project3.desc': '420x 7kW',
-        'experience.table.header.location': 'Location',
-        'experience.table.header.location.en': 'Location',
-        'experience.table.header.count': 'Number of Charging Piles',
-        'experience.viewMore': 'View More Projects',
-        'environment.sustainable.title': 'Sustainable Development',
-        'environment.sustainable.desc': 'Promoting environmental protection through innovative technology and solutions',
-        'technology.smart.title': 'Smart Systems',
-        'technology.smart.desc': 'Creating intelligent solutions using AI technology'
-    }
-};
-
-let currentLang = localStorage.getItem('language') || 'zh-CN';
-
-// 获取翻译内容
-function getTranslation(key) {
-    return translations[currentLang]?.[key] || key;
-}
-
-// 设置语言
-function setLanguage(lang) {
-    if (!translations[lang]) {
-        console.error(`Language ${lang} not found`);
-        return;
+// 多语言支持系统
+class I18nManager {
+    constructor() {
+        this.translations = {};
+        this.currentLang = localStorage.getItem('language') || 'zh-CN';
+        this.fallbackLang = 'zh-CN';
     }
 
-    document.documentElement.lang = lang;
-    
-    // 更新所有带有data-i18n属性的元素
-    document.querySelectorAll('[data-i18n]').forEach(element => {
-        const key = element.getAttribute('data-i18n');
-        const translation = translations[lang][key];
-        
-        if (translation) {
-            // 如果元素是input，更新placeholder
-            if (element.tagName.toLowerCase() === 'input' && element.type === 'text') {
-                element.placeholder = translation;
-            }
-            // 如果元素是img，更新alt文本
-            else if (element.tagName.toLowerCase() === 'img') {
-                element.alt = translation;
-            }
-            // 对于其他元素，更新文本内容
-            else {
-                element.textContent = translation;
-            }
-        } else {
-            console.warn(`Translation not found for key: ${key} in language: ${lang}`);
-        }
-    });
-
-    // 更新所有带有data-i18n-alt属性的元素的alt文本
-    document.querySelectorAll('[data-i18n-alt]').forEach(element => {
-        const key = element.getAttribute('data-i18n-alt');
-        const translation = translations[lang][key];
-        if (translation) {
-            element.alt = translation;
-        }
-    });
-}
-
-// 初始化语言设置
-document.addEventListener('DOMContentLoaded', () => {
-    // 获取用户的语言偏好
-    const userLang = localStorage.getItem('language') || 
-                    navigator.language || 
-                    navigator.userLanguage || 
-                    'zh-CN';
-    
-    // 设置初始语言
-    setLanguage(userLang);
-    
-    // 更新语言切换按钮状态
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        if (btn.dataset.lang === userLang) {
-            btn.classList.add('active');
-        }
-        
-        btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            setLanguage(lang);
-            localStorage.setItem('language', lang);
+    // 初始化语言管理器
+    init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.updatePageLanguage();
+            this.setupLanguageSwitcher();
         });
-    });
+    }
+
+    // 注册翻译
+    registerTranslations(lang, translations) {
+        if (!this.translations[lang]) {
+            this.translations[lang] = {};
+        }
+        this.translations[lang] = { ...this.translations[lang], ...translations };
+    }
+
+    // 动态添加翻译
+    addTranslation(lang, key, value) {
+        if (!this.translations[lang]) {
+            this.translations[lang] = {};
+        }
+        this.translations[lang][key] = value;
+    }
+
+    // 批量添加翻译
+    addTranslations(lang, newTranslations) {
+        if (!this.translations[lang]) {
+            this.translations[lang] = {};
+        }
+        Object.assign(this.translations[lang], newTranslations);
+    }
+
+    // 获取翻译
+    translate(key, params = {}) {
+        let text = this.translations[this.currentLang]?.[key] 
+            || this.translations[this.fallbackLang]?.[key] 
+            || key;
+
+        // 支持参数替换，例如: "hello, {name}" => "hello, John"
+        return text.replace(/\{(\w+)\}/g, (_, param) => params[param] || '');
+    }
+
+    // 设置语言
+    setLanguage(lang) {
+        if (!this.translations[lang]) {
+            console.error(`Language ${lang} not found`);
+            return;
+        }
+        
+        this.currentLang = lang;
+        localStorage.setItem('language', lang);
+        this.updatePageLanguage();
+        
+        // 触发自定义事件
+        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: lang } }));
+    }
+
+    // 更新页面语言
+    updatePageLanguage() {
+        // 设置HTML文档的语言
+        document.documentElement.lang = this.currentLang;
+        
+        // 更新所有带有data-i18n属性的元素
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const params = this.getElementParams(element);
+            const translation = this.translate(key, params);
+            
+            if (translation) {
+                if (element.tagName === 'INPUT' && element.type === 'placeholder') {
+                    element.placeholder = translation;
+                } else {
+                    element.textContent = translation;
+                }
+            }
+        });
+        
+        // 更新所有带有data-i18n-attr的元素
+        document.querySelectorAll('[data-i18n-attr]').forEach(element => {
+            const attrs = element.getAttribute('data-i18n-attr').split(',');
+            attrs.forEach(attr => {
+                const [attrName, key] = attr.trim().split(':');
+                if (attrName && key) {
+                    const params = this.getElementParams(element);
+                    const translation = this.translate(key, params);
+                    if (translation) {
+                        element.setAttribute(attrName, translation);
+                    }
+                }
+            });
+        });
+    }
+
+    // 获取元素的参数
+    getElementParams(element) {
+        const paramsAttr = element.getAttribute('data-i18n-params');
+        if (!paramsAttr) return {};
+        
+        try {
+            return JSON.parse(paramsAttr);
+        } catch (e) {
+            console.error('Invalid data-i18n-params:', paramsAttr);
+            return {};
+        }
+    }
+
+    // 设置语言切换器
+    setupLanguageSwitcher() {
+        const updateButtonStates = () => {
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                // 移除所有按钮的 active 类
+                btn.classList.remove('active');
+                // 为当前语言的按钮添加 active 类
+                if (btn.dataset.lang === this.currentLang) {
+                    btn.classList.add('active');
+                }
+            });
+        };
+
+        // 初始化按钮状态
+        updateButtonStates();
+        
+        // 添加点击事件监听
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const newLang = btn.dataset.lang;
+                if (newLang !== this.currentLang) {
+                    this.setLanguage(newLang);
+                    updateButtonStates();
+                }
+            });
+        });
+
+        // 监听语言变化事件
+        window.addEventListener('languageChanged', () => {
+            updateButtonStates();
+        });
+    }
+}
+
+// 创建全局实例
+const i18n = new I18nManager();
+
+// 注册翻译
+i18n.registerTranslations('zh-CN', {
+    // 公司信息
+    'companyShort': 'INTER SKY PROFIT LIMITED',
+    'companyName': '国际天利有限公司',
+    
+    // 导航菜单
+    'nav.home': '首页',
+    'nav.about': '关于我们',
+    'nav.products': '产品目录',
+    'nav.experience': '项目经验',
+    'nav.team': '团队介绍',
+    'nav.environment': '环保',
+    'nav.technology': '科技',
+    'nav.media': '媒体',
+    'nav.focus': '焦点',
+    'nav.focus.ev': 'EV',
+    'nav.focus.esg': 'ESG',
+    'nav.newEnergy': '新能源科技',
+    'nav.newEnergy.solar': '光伏为易能',
+    'nav.newEnergy.storage': '储能',
+    'nav.newEnergy.charging': 'EV充电',
+    'nav.newEnergy.exchange': '冷热交换',
+    'nav.newEnergy.cases': '案例',
+    'nav.newMedia': '新媒体',
+    'nav.newMedia.video': '短视频制作',
+    'nav.newMedia.operation': '代营运',
+    'nav.newMedia.live': '直播',
+    'nav.newMedia.cases': '案例',
+    'nav.ai': 'AI人工智能',
+    'nav.engineering': '工程系统',
+    'nav.engineering.traffic': '交通系统',
+    'nav.engineering.booking': '预约系统',
+    'nav.engineering.food': '餐饮车',
+    'nav.engineering.cases': '案例',
+    'nav.trade': '贸易',
+    'nav.trade.import': '进出口贸易',
+    'nav.trade.supply': '供应链管理',
+    'nav.trade.service': '贸易服务',
+    'nav.trade.cases': '案例',
+    'nav.contact': '联系我们',
+
+    // 页面标题
+    'title.home': '国际天利有限公司',
+    'title.ai': '国际天利有限公司 - AI人工智能',
+    'title.trade': '国际天利有限公司 - 贸易',
+
+    // 语言选择
+    'lang.zh-CN': '简体',
+    'lang.zh-TW': '繁體',
+    'lang.en': 'EN',
+
+    // 通用元素
+    'slogan': '绿色能源 · 刷新世界',
+    'slogan.ai': '智能创新 · 引领未来',
+    'slogan.trade': '全球贸易 · 专业服务',
+
+    // 页面内容
+    'hero.title': '专业再生能源解决方案提供商',
+    'hero.subtitle': '专注于电动汽车充电站和综合能源系统的设计、生产和安装',
+    'hero.title.ai': 'AI人工智能',
+    'hero.subtitle.ai': '为企业提供智能化转型升级服务',
+    'hero.title.trade': '国际贸易',
+    'hero.subtitle.trade': '提供全方位的国际贸易解决方案',
+
+    // 关于我们
+    'about.title': '关于我们',
+    'about.content': '我们专注于再生能源产品的生产、分销和工程解决方案。提供批发电动汽车充电站销售以及综合能源系统的建造和维护服务。',
+    'about.awardsTitle': '企业殊荣',
+    'about.features.certification': '专业认证',
+    'about.features.certification.desc': '多项国际认证，品质保证',
+    'about.features.support': '技术支持',
+    'about.features.support.desc': '24/7全天候技术支持',
+    'about.features.global': '全球服务',
+    'about.features.global.desc': '覆盖亚太地区主要市场',
+    'about.awards.1': '2023年 国家级高新技术企业',
+    'about.awards.2': '2022年 深圳科技创新委员会 - 高新技术企业证书',
+    'about.awards.3': '2022年 职业健康安全管理体系认证',
+    'about.awards.4': '2022年 环境管理体系认证',
+    'about.awards.5': '2022年 质量管理体系认证',
+    'about.awards.6': '2020年 智慧灯杆产业联盟 - 理事单位',
+    'about.awards.7': '2019年 中国充电桩协会 - 理事单位',
+
+    // 联系方式
+    'contact.title': '联系我们',
+    'contact.address.label': '公司地址',
+    'contact.address': '香港九龙湾宏开道8号',
+    'contact.phone.label': '联系电话',
+    'contact.phone': '+852 1234 5678',
+    'contact.email.label': '电子邮箱',
+    'contact.email': 'info@intersky.com',
+    'contact.hours.label': '工作时间',
+    'contact.hours.value': '周一至周五: 9:00 - 18:00',
+
+    // 施工中提示
+    'construction.title': '页面建设中',
+    'construction.message': '我们正在努力完善相关内容，敬请期待！',
+
+    // 页脚
+    'footer.quickLinks': '快速链接',
+    'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
+
+    // 媒体更新
+    'media.updates.title': '企业动态',
+    'media.updates.desc': '分享企业最新资讯和发展动态',
+
+    // 产品相关
+    'products.title': '产品目录',
+    'products.subtitle': '智能充电解决方案',
+    'products.categories.ac': '交流充电器',
+    'products.categories.dc': '直流充电器',
+    'products.viewSpec': '查看规格',
+    
+    // AC充电器
+    'products.ac.portable.title': 'AC便携式充电器 3.5kW',
+    'products.ac.portable.features.1': '便携方便',
+    'products.ac.portable.features.2': '即插即用',
+    'products.ac.portable.features.3': '友好界面',
+    'products.ac.portable.features.4': '安全可靠',
+    
+    'products.ac.7kw.title': 'AC充电器 7kW',
+    'products.ac.7kw.features.1': '家用充电器RFID版本',
+    'products.ac.7kw.features.2': 'Ocpp1.6版本',
+    'products.ac.7kw.features.3': '4.3英寸屏幕',
+    'products.ac.7kw.features.4': '多语言支持',
+    
+    'products.ac.22kw.title': 'AC充电器 11kW/22kW',
+    'products.ac.22kw.features.1': '家用充电器RFID版本',
+    'products.ac.22kw.features.2': 'Ocpp1.6版本',
+    'products.ac.22kw.features.3': 'LCD显示屏',
+    'products.ac.22kw.features.4': '三相电源输入',
+    
+    // DC充电器
+    'products.dc.40kw.title': 'DC充电器 20kW-40kW',
+    'products.dc.40kw.features.1': 'Ocpp1.6版本',
+    'products.dc.40kw.features.2': '5英寸彩色触摸屏',
+    'products.dc.40kw.features.3': '强制风冷',
+    'products.dc.40kw.features.4': '多重保护功能',
+    
+    'products.dc.120kw.title': 'DC充电器 60kW-120kW',
+    'products.dc.120kw.features.1': 'Ocpp1.6版本',
+    'products.dc.120kw.features.2': '7英寸彩色触摸屏',
+    'products.dc.120kw.features.3': '双充电接口',
+    'products.dc.120kw.features.4': '高功率输出',
+    
+    'products.dc.240kw.title': 'DC充电器 120kW-240kW',
+    'products.dc.240kw.features.1': 'Ocpp1.6版本',
+    'products.dc.240kw.features.2': '55英寸大屏幕(可选)',
+    'products.dc.240kw.features.3': '超高功率输出',
+    'products.dc.240kw.features.4': '商业充电站首选',
+    
+    // 团队成员
+    'team.ivan.desc': '有接近10年地产及6年香港再生能源建设及管理经验',
+    'team.casen.desc': '电力工程开发团队，管理生产业务',
+    'team.ziv.desc': '有多年IT开发及程式经验，同政府机构有合作经验',
+
+    // 项目经验
+    'experience.title': '项目经验',
+    'experience.subtitle': '我们的充电站已成功部署在全国多个城市',
+    'experience.project1.title': '上海万达外场新能源园区充电站',
+    'experience.project1.desc': '5x 120kW<br>12x 7kW',
+    'experience.project2.title': '广州白云区体育馆',
+    'experience.project2.desc': '23x 180kW<br>46x 80kW',
+    'experience.project3.title': '武汉绿地中心停车场充电站',
+    'experience.project3.desc': '420x 7kW',
+    'experience.table.header.location': '地点',
+    'experience.table.header.location.en': 'Location',
+    'experience.table.header.count': '充电桩数目',
+    'experience.table.row1.location': '苍南县城新区祥和锦园安置小区',
+    'experience.table.row2.location': '锦绣开州充电站',
+    'experience.table.row3.location': '永顺县行政中心停车场充电站',
+    'experience.table.row4.location': '暨南大学广州知识产权人才基地',
+    'experience.table.row5.location': '浦东新区两港充电站',
+    'experience.viewMore': '查看更多项目',
+
+    // 团队介绍
+    'team.title': '我们的团队',
+    'team.intro': '我们的优势在于我们多元化且敬业的专业团队。每位成员都拥有再生能源、工程和项目管理的独特专业知识，共同协作推动创新和卓越。',
+    'team.ivan.title': '首席执行官 / CEO',
+    'team.casen.title': '技术总监 / CTO',
+    'team.ziv.title': '系统架构师 / System Architect',
+
+    // 环保
+    'environment.title': '环保',
+    'environment.project.title': '环保项目展示',
+    'environment.project.desc': '我们致力于提供环保解决方案，推动可持续发展',
+    'environment.tech.title': '环保技术',
+    'environment.tech.desc': '采用先进技术，实现资源的高效利用',
+    'environment.sustainable.title': '可持续发展',
+    'environment.sustainable.desc': '通过创新技术和解决方案，推动环保事业可持续发展',
+
+    // 科技
+    'technology.title': '科技',
+    'technology.innovation.title': '科技创新',
+    'technology.innovation.desc': '持续创新，引领行业发展',
+    'technology.rd.title': '技术研发',
+    'technology.rd.desc': '专业团队，专注研发',
+    'technology.smart.title': '智能系统',
+    'technology.smart.desc': '运用人工智能技术，打造智能化解决方案',
+
+    // 页脚
+    'footer.description': '专注于新能源科技发展，致力于为客户提供专业的解决方案',
+    'footer.contact': '联系方式',
+    'footer.followUs': '关注我们',
+    'footer.subscribe': '关注我们的社交媒体，获取最新动态',
 });
+
+i18n.registerTranslations('zh-TW', {
+    // 公司信息
+    'companyShort': 'INTER SKY PROFIT LIMITED',
+    'companyName': '國際天利有限公司',
+    
+    // 导航菜单
+    'nav.home': '首頁',
+    'nav.about': '關於我們',
+    'nav.products': '產品目錄',
+    'nav.experience': '項目經驗',
+    'nav.team': '團隊介紹',
+    'nav.environment': '環保',
+    'nav.technology': '科技',
+    'nav.media': '媒體',
+    'nav.focus': '焦點',
+    'nav.focus.ev': 'EV',
+    'nav.focus.esg': 'ESG',
+    'nav.newEnergy': '新能源科技',
+    'nav.newEnergy.solar': '光伏為易能',
+    'nav.newEnergy.storage': '儲能',
+    'nav.newEnergy.charging': 'EV充電',
+    'nav.newEnergy.exchange': '冷熱交換',
+    'nav.newEnergy.cases': '案例',
+    'nav.newMedia': '新媒體',
+    'nav.newMedia.video': '短視頻製作',
+    'nav.newMedia.operation': '代營運',
+    'nav.newMedia.live': '直播',
+    'nav.newMedia.cases': '案例',
+    'nav.ai': 'AI人工智能',
+    'nav.engineering': '工程系統',
+    'nav.engineering.traffic': '交通系統',
+    'nav.engineering.booking': '預約系統',
+    'nav.engineering.food': '餐飲車',
+    'nav.engineering.cases': '案例',
+    'nav.trade': '貿易',
+    'nav.trade.import': '進出口貿易',
+    'nav.trade.supply': '供應鏈管理',
+    'nav.trade.service': '貿易服務',
+    'nav.trade.cases': '案例',
+    'nav.contact': '聯繫我們',
+
+    // 页面标题
+    'title.home': '國際天利有限公司',
+    'title.ai': '國際天利有限公司 - AI人工智能',
+    'title.trade': '國際天利有限公司 - 貿易',
+
+    // 语言选择
+    'lang.zh-CN': '简体',
+    'lang.zh-TW': '繁體',
+    'lang.en': 'EN',
+
+    // 通用元素
+    'slogan': '綠色能源 · 刷新世界',
+    'slogan.ai': '智能創新 · 引領未來',
+    'slogan.trade': '全球貿易 · 專業服務',
+
+    // 页面内容
+    'hero.title': '專業再生能源解決方案提供商',
+    'hero.subtitle': '專注於電動汽車充電站和綜合能源系統的設計、生產和安裝',
+    'hero.title.ai': 'AI人工智能',
+    'hero.subtitle.ai': '為企業提供智能化轉型升級服務',
+    'hero.title.trade': '國際貿易',
+    'hero.subtitle.trade': '提供全方位的國際貿易解決方案',
+
+    // 关于我们
+    'about.title': '關於我們',
+    'about.content': '我們專注於再生能源產品的生產、分銷和工程解決方案。提供批發電動汽車充電站銷售以及綜合能源系統的建造和維護服務。',
+    'about.awardsTitle': '企業殊榮',
+    'about.features.certification': '專業認證',
+    'about.features.certification.desc': '多項國際認證，品質保證',
+    'about.features.support': '技術支持',
+    'about.features.support.desc': '24/7全天候技術支持',
+    'about.features.global': '全球服務',
+    'about.features.global.desc': '覆蓋亞太地區主要市場',
+    'about.awards.1': '2023年 國家級高新技術企業',
+    'about.awards.2': '2022年 深圳科技創新委員會 - 高新技術企業證書',
+    'about.awards.3': '2022年 職業健康安全管理體系認證',
+    'about.awards.4': '2022年 環境管理體系認證',
+    'about.awards.5': '2022年 質量管理體系認證',
+    'about.awards.6': '2020年 智慧燈桿產業聯盟 - 理事單位',
+    'about.awards.7': '2019年 中國充電樁協會 - 理事單位',
+
+    // 联系方式
+    'contact.title': '聯繫我們',
+    'contact.address.label': '公司地址',
+    'contact.address': '香港九龍灣宏開道8號',
+    'contact.phone.label': '聯繫電話',
+    'contact.phone': '+852 1234 5678',
+    'contact.email.label': '電子郵箱',
+    'contact.email': 'info@intersky.com',
+    'contact.hours.label': '工作時間',
+    'contact.hours.value': '週一至週五: 9:00 - 18:00',
+
+    // 施工中提示
+    'construction.title': '頁面建設中',
+    'construction.message': '我們正在努力完善相關內容，敬請期待！',
+
+    // 页脚
+    'footer.quickLinks': '快速鏈接',
+    'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. 保留所有權利。',
+
+    // 媒体更新
+    'media.updates.title': '企業動態',
+    'media.updates.desc': '分享企業最新資訊和發展動態',
+
+    // 產品相關
+    'products.title': '產品目錄',
+    'products.subtitle': '智能充電解決方案',
+    'products.categories.ac': '交流充電器',
+    'products.categories.dc': '直流充電器',
+    'products.viewSpec': '查看規格',
+    
+    // AC充電器
+    'products.ac.portable.title': 'AC便攜式充電器 3.5kW',
+    'products.ac.portable.features.1': '便攜方便',
+    'products.ac.portable.features.2': '即插即用',
+    'products.ac.portable.features.3': '友好界面',
+    'products.ac.portable.features.4': '安全可靠',
+    
+    'products.ac.7kw.title': 'AC充電器 7kW',
+    'products.ac.7kw.features.1': '家用充電器RFID版本',
+    'products.ac.7kw.features.2': 'Ocpp1.6版本',
+    'products.ac.7kw.features.3': '4.3英寸屏幕',
+    'products.ac.7kw.features.4': '多語言支持',
+    
+    'products.ac.22kw.title': 'AC充電器 11kW/22kW',
+    'products.ac.22kw.features.1': '家用充電器RFID版本',
+    'products.ac.22kw.features.2': 'Ocpp1.6版本',
+    'products.ac.22kw.features.3': 'LCD顯示屏',
+    'products.ac.22kw.features.4': '三相電源輸入',
+    
+    // DC充電器
+    'products.dc.40kw.title': 'DC充電器 20kW-40kW',
+    'products.dc.40kw.features.1': 'Ocpp1.6版本',
+    'products.dc.40kw.features.2': '5英寸彩色觸摸屏',
+    'products.dc.40kw.features.3': '強制風冷',
+    'products.dc.40kw.features.4': '多重保護功能',
+    
+    'products.dc.120kw.title': 'DC充電器 60kW-120kW',
+    'products.dc.120kw.features.1': 'Ocpp1.6版本',
+    'products.dc.120kw.features.2': '7英寸彩色觸摸屏',
+    'products.dc.120kw.features.3': '雙充電接口',
+    'products.dc.120kw.features.4': '高功率輸出',
+    
+    'products.dc.240kw.title': 'DC充電器 120kW-240kW',
+    'products.dc.240kw.features.1': 'Ocpp1.6版本',
+    'products.dc.240kw.features.2': '55英寸大屏幕(可選)',
+    'products.dc.240kw.features.3': '超高功率輸出',
+    'products.dc.240kw.features.4': '商業充電站首選',
+    
+    // 團隊成員
+    'team.ivan.desc': '有接近10年地產及6年香港再生能源建設及管理經驗',
+    'team.casen.desc': '電力工程開發團隊，管理生產業務',
+    'team.ziv.desc': '有多年IT開發及程式經驗，同政府機構有合作經驗',
+
+    // 項目經驗
+    'experience.title': '項目經驗',
+    'experience.subtitle': '我們的充電站已成功部署在全國多個城市',
+    'experience.project1.title': '上海萬達外場新能源園區充電站',
+    'experience.project1.desc': '5x 120kW<br>12x 7kW',
+    'experience.project2.title': '廣州白雲區體育館',
+    'experience.project2.desc': '23x 180kW<br>46x 80kW',
+    'experience.project3.title': '武漢綠地中心停車場充電站',
+    'experience.project3.desc': '420x 7kW',
+    'experience.table.header.location': '地點',
+    'experience.table.header.location.en': 'Location',
+    'experience.table.header.count': '充電樁數目',
+    'experience.table.row1.location': '蒼南縣城新區祥和錦園安置小區',
+    'experience.table.row2.location': '錦繡開州充電站',
+    'experience.table.row3.location': '永順縣行政中心停車場充電站',
+    'experience.table.row4.location': '暨南大學廣州知識產權人才基地',
+    'experience.table.row5.location': '浦東新區兩港充電站',
+    'experience.viewMore': '查看更多項目',
+
+    // 團隊介紹
+    'team.title': '我們的團隊',
+    'team.intro': '我們的優勢在於我們多元化且敬業的專業團隊。每位成員都擁有再生能源、工程和項目管理的獨特專業知識，共同協作推動創新和卓越。',
+    'team.ivan.title': '首席執行官 / CEO',
+    'team.casen.title': '技術總監 / CTO',
+    'team.ziv.title': '系統架構師 / System Architect',
+
+    // 環保
+    'environment.title': '環保',
+    'environment.project.title': '環保項目展示',
+    'environment.project.desc': '我們致力於提供環保解決方案，推動可持續發展',
+    'environment.tech.title': '環保技術',
+    'environment.tech.desc': '採用先進技術，實現資源的高效利用',
+    'environment.sustainable.title': '可持續發展',
+    'environment.sustainable.desc': '通過創新技術和解決方案，推動環保事業可持續發展',
+
+    // 科技
+    'technology.title': '科技',
+    'technology.innovation.title': '科技創新',
+    'technology.innovation.desc': '持續創新，引領行業發展',
+    'technology.rd.title': '技術研發',
+    'technology.rd.desc': '專業團隊，專注研發',
+    'technology.smart.title': '智能系統',
+    'technology.smart.desc': '運用人工智能技術，打造智能化解決方案',
+
+    // 頁腳
+    'footer.description': '專注於新能源科技發展，致力於為客戶提供專業的解決方案',
+    'footer.contact': '聯繫方式',
+    'footer.followUs': '關注我們',
+    'footer.subscribe': '關注我們的社交媒體，獲取最新動態',
+});
+
+i18n.registerTranslations('en', {
+    // Company Info
+    'companyShort': 'INTER SKY PROFIT LIMITED',
+    'companyName': 'INTER SKY PROFIT LIMITED',
+    
+    // Navigation Menu
+    'nav.home': 'Home',
+    'nav.about': 'About Us',
+    'nav.products': 'Products',
+    'nav.experience': 'Experience',
+    'nav.team': 'Team',
+    'nav.environment': 'Environment',
+    'nav.technology': 'Technology',
+    'nav.media': 'Media',
+    'nav.focus': 'Focus',
+    'nav.focus.ev': 'EV',
+    'nav.focus.esg': 'ESG',
+    'nav.newEnergy': 'New Energy',
+    'nav.newEnergy.solar': 'Solar Power',
+    'nav.newEnergy.storage': 'Energy Storage',
+    'nav.newEnergy.charging': 'EV Charging',
+    'nav.newEnergy.exchange': 'Heat Exchange',
+    'nav.newEnergy.cases': 'Cases',
+    'nav.newMedia': 'New Media',
+    'nav.newMedia.video': 'Video Production',
+    'nav.newMedia.operation': 'Operation',
+    'nav.newMedia.live': 'Live Streaming',
+    'nav.newMedia.cases': 'Cases',
+    'nav.ai': 'AI',
+    'nav.engineering': 'Engineering',
+    'nav.engineering.traffic': 'Traffic Systems',
+    'nav.engineering.booking': 'Booking Systems',
+    'nav.engineering.food': 'Food Trucks',
+    'nav.engineering.cases': 'Cases',
+    'nav.trade': 'Trade',
+    'nav.trade.import': 'Import & Export',
+    'nav.trade.supply': 'Supply Chain',
+    'nav.trade.service': 'Trade Services',
+    'nav.trade.cases': 'Cases',
+    'nav.contact': 'Contact',
+
+    // Page Titles
+    'title.home': 'INTER SKY PROFIT LIMITED',
+    'title.ai': 'INTER SKY PROFIT LIMITED - AI Solutions',
+    'title.trade': 'INTER SKY PROFIT LIMITED - Trade',
+
+    // Language Selection
+    'lang.zh-CN': '简体',
+    'lang.zh-TW': '繁體',
+    'lang.en': 'EN',
+
+    // Common Elements
+    'slogan': 'Green Energy · Refresh the World',
+    'slogan.ai': 'Smart Innovation · Leading the Future',
+    'slogan.trade': 'Global Trade · Professional Service',
+
+    // Page Content
+    'hero.title': 'Professional Renewable Energy Solutions Provider',
+    'hero.subtitle': 'Specializing in EV Charging Station and Integrated Energy System Design, Production and Installation',
+    'hero.title.ai': 'AI Solutions',
+    'hero.subtitle.ai': 'Providing Intelligent Transformation Services for Enterprises',
+    'hero.title.trade': 'International Trade',
+    'hero.subtitle.trade': 'Comprehensive International Trade Solutions',
+
+    // About Us
+    'about.title': 'About Us',
+    'about.content': 'We focus on the production and distribution of renewable energy products, providing wholesale EV charging station sales and comprehensive energy system construction and maintenance services.',
+    'about.awardsTitle': 'Corporate Awards',
+    'about.features.certification': 'Professional Certification',
+    'about.features.certification.desc': 'Multiple international certifications, quality assured',
+    'about.features.support': 'Technical Support',
+    'about.features.support.desc': '24/7 technical support',
+    'about.features.global': 'Global Service',
+    'about.features.global.desc': 'Covering major markets in Asia Pacific',
+    'about.awards.1': '2023 National High-Tech Enterprise',
+    'about.awards.2': '2022 Shenzhen Science and Technology Innovation Committee - High-Tech Enterprise Certificate',
+    'about.awards.3': '2022 Occupational Health and Safety Management System Certification',
+    'about.awards.4': '2022 Environmental Management System Certification',
+    'about.awards.5': '2022 Quality Management System Certification',
+    'about.awards.6': '2020 Smart Pole Industry Alliance - Council Member',
+    'about.awards.7': '2019 China Charging Pile Association - Council Member',
+
+    // Contact
+    'contact.title': 'Contact Us',
+    'contact.address.label': 'Address',
+    'contact.address': '8 Wang Hoi Road, Kowloon Bay, Hong Kong',
+    'contact.phone.label': 'Phone',
+    'contact.phone': '+852 1234 5678',
+    'contact.email.label': 'Email',
+    'contact.email': 'info@intersky.com',
+    'contact.hours.label': 'Business Hours',
+    'contact.hours.value': 'Mon-Fri: 9:00 AM - 6:00 PM',
+
+    // Under Construction
+    'construction.title': 'Under Construction',
+    'construction.message': 'We are working hard to improve the content. Please stay tuned!',
+
+    // Footer
+    'footer.quickLinks': 'Quick Links',
+    'footer.copyright': '© 2024 INTER SKY PROFIT LIMITED. All rights reserved.',
+
+    // 媒体更新
+    'media.updates.title': 'Company Updates',
+    'media.updates.desc': 'Share the latest company news and development updates',
+
+    // Products
+    'products.title': 'Product Catalog',
+    'products.subtitle': 'Smart Charging Solutions',
+    'products.categories.ac': 'AC Chargers',
+    'products.categories.dc': 'DC Chargers',
+    'products.viewSpec': 'View Specifications',
+    
+    // AC Chargers
+    'products.ac.portable.title': 'AC Portable Charger 3.5kW',
+    'products.ac.portable.features.1': 'Portable & Convenient',
+    'products.ac.portable.features.2': 'Plug and Play',
+    'products.ac.portable.features.3': 'User-friendly Interface',
+    'products.ac.portable.features.4': 'Safe and Reliable',
+    
+    'products.ac.7kw.title': 'AC Charger 7kW',
+    'products.ac.7kw.features.1': 'Home Charger with RFID',
+    'products.ac.7kw.features.2': 'Ocpp1.6 Version',
+    'products.ac.7kw.features.3': '4.3-inch Screen',
+    'products.ac.7kw.features.4': 'Multi-language Support',
+    
+    'products.ac.22kw.title': 'AC Charger 11kW/22kW',
+    'products.ac.22kw.features.1': 'Home Charger with RFID',
+    'products.ac.22kw.features.2': 'Ocpp1.6 Version',
+    'products.ac.22kw.features.3': 'LCD Display',
+    'products.ac.22kw.features.4': 'Three-phase Power Input',
+    
+    // DC Chargers
+    'products.dc.40kw.title': 'DC Charger 20kW-40kW',
+    'products.dc.40kw.features.1': 'Ocpp1.6 Version',
+    'products.dc.40kw.features.2': '5-inch Color Touch Screen',
+    'products.dc.40kw.features.3': 'Forced Air Cooling',
+    'products.dc.40kw.features.4': 'Multiple Protection Features',
+    
+    'products.dc.120kw.title': 'DC Charger 60kW-120kW',
+    'products.dc.120kw.features.1': 'Ocpp1.6 Version',
+    'products.dc.120kw.features.2': '7-inch Color Touch Screen',
+    'products.dc.120kw.features.3': 'Dual Charging Ports',
+    'products.dc.120kw.features.4': 'High Power Output',
+    
+    'products.dc.240kw.title': 'DC Charger 120kW-240kW',
+    'products.dc.240kw.features.1': 'Ocpp1.6 Version',
+    'products.dc.240kw.features.2': '55-inch Screen (Optional)',
+    'products.dc.240kw.features.3': 'Ultra-high Power Output',
+    'products.dc.240kw.features.4': 'Ideal for Commercial Stations',
+    
+    // Team Members
+    'team.ivan.desc': 'Nearly 10 years of experience in real estate and 6 years in Hong Kong renewable energy construction and management',
+    'team.casen.desc': 'Electrical engineering development & research team, managing production operations',
+    'team.ziv.desc': 'Many years of experience in IT development and programming, with government agency cooperation experience',
+
+    // Experience
+    'experience.title': 'Project Experience',
+    'experience.subtitle': 'Our charging stations have been successfully deployed in multiple cities',
+    'experience.project1.title': 'Shanghai Wanda New Energy Park Charging Station',
+    'experience.project1.desc': '5x 120kW<br>12x 7kW',
+    'experience.project2.title': 'Guangzhou Baiyun District Stadium',
+    'experience.project2.desc': '23x 180kW<br>46x 80kW',
+    'experience.project3.title': 'Wuhan Greenland Center Parking Charging Station',
+    'experience.project3.desc': '420x 7kW',
+    'experience.table.header.location': 'Location',
+    'experience.table.header.location.en': 'Location',
+    'experience.table.header.count': 'Number of Chargers',
+    'experience.table.row1.location': 'Xianghe Jinyuan Resettlement Community',
+    'experience.table.row2.location': 'Jinxiu Kaizhou Charging Station',
+    'experience.table.row3.location': 'Yongshun County Administrative Center',
+    'experience.table.row4.location': 'Jinan University Guangzhou IP Talent Base',
+    'experience.table.row5.location': 'Pudong New Area Lianggang Station',
+    'experience.viewMore': 'View More Projects',
+
+    // Team
+    'team.title': 'Our Team',
+    'team.intro': 'Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management.',
+    'team.ivan.title': 'Chief Executive Officer / CEO',
+    'team.casen.title': 'Chief Technology Officer / CTO',
+    'team.ziv.title': 'System Architect',
+
+    // Environment
+    'environment.title': 'Environment',
+    'environment.project.title': 'Environmental Projects',
+    'environment.project.desc': 'We are committed to providing eco-friendly solutions for sustainable development',
+    'environment.tech.title': 'Green Technology',
+    'environment.tech.desc': 'Adopting advanced technology for efficient resource utilization',
+    'environment.sustainable.title': 'Sustainable Development',
+    'environment.sustainable.desc': 'Promoting environmental sustainability through innovative technology and solutions',
+
+    // Technology
+    'technology.title': 'Technology',
+    'technology.innovation.title': 'Innovation',
+    'technology.innovation.desc': 'Continuous innovation, leading industry development',
+    'technology.rd.title': 'R&D',
+    'technology.rd.desc': 'Professional team, focused on research and development',
+    'technology.smart.title': 'Smart Systems',
+    'technology.smart.desc': 'Leveraging AI technology to create intelligent solutions',
+
+    // Footer
+    'footer.description': 'Focused on new energy technology development, committed to providing professional solutions',
+    'footer.contact': 'Contact',
+    'footer.followUs': 'Follow Us',
+    'footer.subscribe': 'Follow our social media for latest updates',
+});
+
+// 初始化
+i18n.init();
+
+// 导出全局实例供其他模块使用
+window.i18n = i18n;

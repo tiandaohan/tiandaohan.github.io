@@ -194,28 +194,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-
-    // 初始化国际化
-    const langButtons = document.querySelectorAll('.lang-btn');
-    const defaultLang = localStorage.getItem('language') || 'zh-CN';
-    
-    // 设置初始语言
-    setLanguage(defaultLang);
-    
-    // 语言切换按钮点击事件
-    langButtons.forEach(btn => {
-        if (btn.dataset.lang === defaultLang) {
-            btn.classList.add('active');
-        }
-        
-        btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
-            langButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            setLanguage(lang);
-            localStorage.setItem('language', lang);
-        });
-    });
 });
 
 // 更新活动菜单项

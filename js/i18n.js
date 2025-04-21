@@ -60,33 +60,39 @@ class I18nManager {
             return;
         }
 
-        // 验证翻译数据
-        this._validateTranslations();
+        try {
+            // 验证翻译数据
+            this._validateTranslations();
 
-        // 设置 MutationObserver 来处理动态加载的内容
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.addedNodes.length) {
-                    this.updatePageLanguage();
-                }
+            // 设置 MutationObserver 来处理动态加载的内容
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.addedNodes.length) {
+                        this.updatePageLanguage();
+                    }
+                });
             });
-        });
 
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
 
-        // 预加载所有翻译数据
-        await this._preloadTranslations();
+            // 预加载所有翻译数据
+            await this._preloadTranslations();
 
-        // 初始化语言切换器
-        this.setupLanguageSwitcher();
-        
-        // 更新页面语言
-        await this.updatePageLanguage();
+            // 初始化语言切换器
+            this.setupLanguageSwitcher();
+            
+            // 更新页面语言
+            await this.updatePageLanguage();
 
-        this.initialized = true;
+            this.initialized = true;
+        } catch (error) {
+            console.error('Error in _initialize:', error);
+            // 发生错误时使用后备初始化
+            this._fallbackInitialize();
+        }
     }
 
     async _preloadTranslations() {
@@ -224,25 +230,25 @@ class I18nManager {
 
     // 设置语言
     setLanguage(lang) {
-        if (!this.translations[lang]) {
-            console.error(`Language ${lang} not found`);
-            return;
+        if (this.currentLang === lang) {
+            return; // 如果语言相同，直接返回，避免不必要的重载
         }
         
-        this.currentLang = lang;
-        localStorage.setItem('language', lang);
-        
-        // 确保初始化完成后再更新语言
-        this.init().then(() => {
+        try {
+            localStorage.setItem('language', lang);
+            this.currentLang = lang;
             this.updatePageLanguage();
+            
             // 触发自定义事件
-            window.dispatchEvent(new CustomEvent('languageChanged', { 
-                detail: { 
-                    language: lang,
-                    timestamp: new Date().getTime() // 添加时间戳避免缓存
-                }
-            }));
-        });
+            const event = new CustomEvent('languageChanged', { detail: { language: lang } });
+            document.dispatchEvent(event);
+            
+            // 更新按钮状态
+            this.updateButtonStates();
+        } catch (error) {
+            console.error('Error setting language:', error);
+            // 发生错误时不重载页面
+        }
     }
 
     // 获取元素的参数
@@ -260,35 +266,52 @@ class I18nManager {
 
     // 设置语言切换器
     setupLanguageSwitcher() {
-        const updateButtonStates = () => {
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                // 移除所有按钮的 active 类
-                btn.classList.remove('active');
-                // 为当前语言的按钮添加 active 类
-                if (btn.dataset.lang === this.currentLang) {
+        try {
+            const switcherContainer = document.querySelector('.language-switcher');
+            if (!switcherContainer) {
+                console.warn('Language switcher container not found');
+                return;
+            }
+
+            // 移除现有的事件监听器
+            const oldButtons = switcherContainer.querySelectorAll('.lang-btn');
+            oldButtons.forEach(btn => {
+                btn.replaceWith(btn.cloneNode(true));
+            });
+
+            // 添加新的事件监听器
+            const buttons = switcherContainer.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang) {
+                        this.setLanguage(lang);
+                    }
+                });
+            });
+
+            // 初始化按钮状态
+            this.updateButtonStates();
+        } catch (error) {
+            console.error('Error setting up language switcher:', error);
+        }
+    }
+
+    updateButtonStates() {
+        try {
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                const btnLang = btn.getAttribute('data-lang');
+                if (btnLang === this.currentLang) {
                     btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
                 }
             });
-        };
-
-        // 初始化按钮状态
-        updateButtonStates();
-        
-        // 添加点击事件监听
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const newLang = btn.dataset.lang;
-                if (newLang !== this.currentLang) {
-                    this.setLanguage(newLang);
-                    updateButtonStates();
-                }
-            });
-        });
-
-        // 监听语言变化事件
-        window.addEventListener('languageChanged', () => {
-            updateButtonStates();
-        });
+        } catch (error) {
+            console.error('Error updating button states:', error);
+        }
     }
 }
 

@@ -692,3 +692,83 @@ footer {
         display: block;
     }
 }
+
+/* 产品规格模态框样式 */
+.spec-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.spec-modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 20px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+.spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    display: none;
+}
+
+.spec-table th,
+.spec-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.spec-table th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.spec-table tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.spec-table tr:hover {
+    background-color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .spec-modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+    
+    .spec-table th,
+    .spec-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

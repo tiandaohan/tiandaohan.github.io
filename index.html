@@ -268,10 +268,220 @@
     <!-- 产品规格模态框 -->
     <div id="spec-modal-new" class="modal-new">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2 id="modal-title-new">产品规格</h2>
+            <span class="close-btn" data-i18n="modal.close">&times;</span>
+            <h2 id="modal-title-new" data-i18n="modal.title">产品规格</h2>
             <div id="modal-body-new">
-                <!-- 动态内容将通过JavaScript填充 -->
+                <!-- AC便携式充电器规格 -->
+                <table class="spec-table" id="spec-portable" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.input">输入</td>
+                        <td data-i18n="spec.portable.input.value">AC 220V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.output">输出功率</td>
+                        <td data-i18n="spec.portable.output.value">3.5kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.connector">充电接口</td>
+                        <td data-i18n="spec.portable.connector.value">Type 2</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.protection">防护等级</td>
+                        <td data-i18n="spec.portable.protection.value">IP54</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.temperature">工作温度</td>
+                        <td data-i18n="spec.portable.temperature.value">-20°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.cable">线缆长度</td>
+                        <td data-i18n="spec.portable.cable.value">5米</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.certification">认证</td>
+                        <td data-i18n="spec.portable.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
+
+                <!-- AC 7kW充电器规格 -->
+                <table class="spec-table" id="spec-7kw" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.input">输入</td>
+                        <td data-i18n="spec.7kw.input.value">AC 220V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.output">输出功率</td>
+                        <td data-i18n="spec.7kw.output.value">7kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.connector">充电接口</td>
+                        <td data-i18n="spec.7kw.connector.value">Type 2</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.protection">防护等级</td>
+                        <td data-i18n="spec.7kw.protection.value">IP65</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.temperature">工作温度</td>
+                        <td data-i18n="spec.7kw.temperature.value">-30°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.display">显示屏</td>
+                        <td data-i18n="spec.7kw.display.value">4.3英寸LCD</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.communication">通信</td>
+                        <td data-i18n="spec.7kw.communication.value">WiFi/4G(选配)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.certification">认证</td>
+                        <td data-i18n="spec.7kw.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
+
+                <!-- AC 11kW/22kW充电器规格 -->
+                <table class="spec-table" id="spec-22kw" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.input">输入</td>
+                        <td data-i18n="spec.22kw.input.value">AC 380V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.output">输出功率</td>
+                        <td data-i18n="spec.22kw.output.value">11kW/22kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.connector">充电接口</td>
+                        <td data-i18n="spec.22kw.connector.value">Type 2</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.protection">防护等级</td>
+                        <td data-i18n="spec.22kw.protection.value">IP65</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.temperature">工作温度</td>
+                        <td data-i18n="spec.22kw.temperature.value">-30°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.display">显示屏</td>
+                        <td data-i18n="spec.22kw.display.value">7英寸LCD</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.communication">通信</td>
+                        <td data-i18n="spec.22kw.communication.value">WiFi/4G/以太网</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.certification">认证</td>
+                        <td data-i18n="spec.22kw.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
+
+                <!-- DC 20-40kW充电器规格 -->
+                <table class="spec-table" id="spec-40kw" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.input">输入</td>
+                        <td data-i18n="spec.40kw.input.value">AC 380V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.output">输出功率</td>
+                        <td data-i18n="spec.40kw.output.value">20kW-40kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.connector">充电接口</td>
+                        <td data-i18n="spec.40kw.connector.value">CCS2/CHAdeMO</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.protection">防护等级</td>
+                        <td data-i18n="spec.40kw.protection.value">IP54</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.temperature">工作温度</td>
+                        <td data-i18n="spec.40kw.temperature.value">-30°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.display">显示屏</td>
+                        <td data-i18n="spec.40kw.display.value">5英寸触摸屏</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.cooling">冷却方式</td>
+                        <td data-i18n="spec.40kw.cooling.value">强制风冷</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.certification">认证</td>
+                        <td data-i18n="spec.40kw.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
+
+                <!-- DC 60-120kW充电器规格 -->
+                <table class="spec-table" id="spec-120kw" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.120kw.input">输入</td>
+                        <td data-i18n="spec.120kw.input.value">AC 380V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.output">输出功率</td>
+                        <td data-i18n="spec.120kw.output.value">60kW-120kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.connector">充电接口</td>
+                        <td data-i18n="spec.120kw.connector.value">CCS2/CHAdeMO</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.protection">防护等级</td>
+                        <td data-i18n="spec.120kw.protection.value">IP54</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.temperature">工作温度</td>
+                        <td data-i18n="spec.120kw.temperature.value">-30°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.display">显示屏</td>
+                        <td data-i18n="spec.120kw.display.value">7英寸触摸屏</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.cooling">冷却方式</td>
+                        <td data-i18n="spec.120kw.cooling.value">液冷</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.120kw.certification">认证</td>
+                        <td data-i18n="spec.120kw.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
+
+                <!-- DC 120-240kW充电器规格 -->
+                <table class="spec-table" id="spec-240kw" style="display: none;">
+                    <tr>
+                        <td data-i18n="spec.240kw.input">输入</td>
+                        <td data-i18n="spec.240kw.input.value">AC 380V±15%</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.output">输出功率</td>
+                        <td data-i18n="spec.240kw.output.value">120kW-240kW</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.connector">充电接口</td>
+                        <td data-i18n="spec.240kw.connector.value">CCS2/CHAdeMO</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.protection">防护等级</td>
+                        <td data-i18n="spec.240kw.protection.value">IP54</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.temperature">工作温度</td>
+                        <td data-i18n="spec.240kw.temperature.value">-30°C to +50°C</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.display">显示屏</td>
+                        <td data-i18n="spec.240kw.display.value">55英寸大屏(选配)</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.cooling">冷却方式</td>
+                        <td data-i18n="spec.240kw.cooling.value">液冷</td>
+                    </tr>
+                    <tr>
+                        <td data-i18n="spec.240kw.certification">认证</td>
+                        <td data-i18n="spec.240kw.certification.value">CE/TUV</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -308,29 +518,79 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td data-i18n="experience.table.row1.location">苍南县城新区祥和锦园安置小区</td>
-                            <td data-i18n="experience.table.row1.location.en">Xianghe Jinyuan resettlement community</td>
-                            <td>178</td>
+                            <td>苍南县城新区祥和锦园安置小区</td>
+                            <td data-i18n="experience.table.row1.location">Xianghe Jinyuan Resettlement Community</td>
+                            <td data-i18n="experience.table.row1.count">42</td>
                         </tr>
                         <tr>
-                            <td data-i18n="experience.table.row2.location">锦绣开州充电站</td>
-                            <td data-i18n="experience.table.row2.location.en">Jinxiu Kaizhou charging station</td>
-                            <td>169</td>
+                            <td>锦绣开州充电站</td>
+                            <td data-i18n="experience.table.row2.location">Jinxiu Kaizhou Charging Station</td>
+                            <td data-i18n="experience.table.row2.count">38</td>
                         </tr>
                         <tr>
-                            <td data-i18n="experience.table.row3.location">永顺县行政中心停车场充电站</td>
-                            <td data-i18n="experience.table.row3.location.en">Yongshun County Administrative Center</td>
-                            <td>69</td>
+                            <td>永顺县行政中心停车场充电站</td>
+                            <td data-i18n="experience.table.row3.location">Yongshun County Administrative Center</td>
+                            <td data-i18n="experience.table.row3.count">36</td>
                         </tr>
                         <tr>
-                            <td data-i18n="experience.table.row4.location">暨南大学广州知识产权人才基地</td>
-                            <td data-i18n="experience.table.row4.location.en">Jinan University Guangzhou</td>
-                            <td>60</td>
+                            <td>暨南大学广州知识产权人才基地</td>
+                            <td data-i18n="experience.table.row4.location">Jinan University Guangzhou IP Talent Base</td>
+                            <td data-i18n="experience.table.row4.count">35</td>
                         </tr>
                         <tr>
-                            <td data-i18n="experience.table.row5.location">浦东新区两港充电站</td>
-                            <td data-i18n="experience.table.row5.location.en">Pudong New Area Lianggang</td>
-                            <td>40</td>
+                            <td>浦东新区两港充电站</td>
+                            <td data-i18n="experience.table.row5.location">Pudong New Area Lianggang Station</td>
+                            <td data-i18n="experience.table.row5.count">35</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row6.location">芮城充电中心</td>
+                            <td data-i18n="experience.table.row6.location.en">Ruicheng charging center</td>
+                            <td data-i18n="experience.table.row6.count">34</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row7.location">珠海城市职业技术学院</td>
+                            <td data-i18n="experience.table.row7.location.en">Zhuhai City Vocational and Technical College</td>
+                            <td data-i18n="experience.table.row7.count">26</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row8.location">天河区骏景小学充电站</td>
+                            <td data-i18n="experience.table.row8.location.en">Tianhe District Junjing Primary School charging station</td>
+                            <td data-i18n="experience.table.row8.count">26</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row9.location">唐华充电站</td>
+                            <td data-i18n="experience.table.row9.location.en">Tanghua charging station</td>
+                            <td data-i18n="experience.table.row9.count">22</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row10.location">易明充电站</td>
+                            <td data-i18n="experience.table.row10.location.en">Yiming charging station</td>
+                            <td data-i18n="experience.table.row10.count">21</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row11.location">木雅圣地360KW充电站</td>
+                            <td data-i18n="experience.table.row11.location.en">Muya Holy Land 360KW charging station</td>
+                            <td data-i18n="experience.table.row11.count">17</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row12.location">宜春畅海苑共享充电桩</td>
+                            <td data-i18n="experience.table.row12.location.en">Yichun Changhaiyuan shared charging pile</td>
+                            <td data-i18n="experience.table.row12.count">16</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row13.location">平远县上举镇新农村兴建充电站</td>
+                            <td data-i18n="experience.table.row13.location.en">Pingyuan County Shangju Town New Rural Construction Charging Station</td>
+                            <td data-i18n="experience.table.row13.count">11</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row14.location">云奥泰生物科技</td>
+                            <td data-i18n="experience.table.row14.location.en">Yunaotai Biotechnology</td>
+                            <td data-i18n="experience.table.row14.count">9</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="experience.table.row15.location">贞丰1号加油站</td>
+                            <td data-i18n="experience.table.row15.location.en">Zhenfeng No. 1 Gas Station</td>
+                            <td data-i18n="experience.table.row15.count">8</td>
                         </tr>
                     </tbody>
                 </table>

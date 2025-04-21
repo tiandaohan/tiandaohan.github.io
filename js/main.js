@@ -213,3 +213,46 @@ function updateActiveMenuItem() {
 
 // 页面加载完成后更新活动菜单项
 window.addEventListener('load', updateActiveMenuItem);
+
+// 产品规格模态框控制
+const specModal = document.getElementById('spec-modal-new');
+const specTables = document.querySelectorAll('.spec-table');
+const closeBtn = document.querySelector('.close-btn');
+
+// 显示指定产品的规格
+function showSpecifications(productId) {
+    specModal.style.display = 'block';
+    
+    // 隐藏所有规格表
+    specTables.forEach(table => {
+        table.style.display = 'none';
+    });
+    
+    // 显示对应产品的规格表
+    const targetTable = document.getElementById(`spec-${productId}`);
+    if (targetTable) {
+        targetTable.style.display = 'table';
+    }
+}
+
+// 关闭模态框
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        specModal.style.display = 'none';
+    });
+}
+
+// 点击窗口外部关闭模态框
+window.addEventListener('click', (event) => {
+    if (event.target === specModal) {
+        specModal.style.display = 'none';
+    }
+});
+
+// 为所有规格按钮添加点击事件
+document.querySelectorAll('[data-spec-trigger]').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const productId = e.target.getAttribute('data-spec-trigger');
+        showSpecifications(productId);
+    });
+});

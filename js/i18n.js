@@ -6,35 +6,62 @@ class I18nManager {
         this.fallbackLang = 'zh-CN';
         this.initialized = false;
         this.initPromise = null;
+        this.maxRetries = 3;
+        this.retryCount = 0;
+        this.retryDelay = 500; // 毫秒
     }
 
-    // 初始化语言管理器
-    init() {
+    async init() {
         if (this.initPromise) {
             return this.initPromise;
         }
 
-        this.initPromise = new Promise((resolve) => {
-            // 确保 DOM 完全加载
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    this._initialize();
-                    resolve();
-                });
-            } else {
-                this._initialize();
-                resolve();
-            }
+        this.initPromise = new Promise(async (resolve) => {
+            const initializeWithRetry = async () => {
+                try {
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', () => {
+                            this._initialize();
+                            resolve();
+                        });
+                    } else {
+                        await this._initialize();
+                        resolve();
+                    }
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    if (this.retryCount < this.maxRetries) {
+                        this.retryCount++;
+                        console.log(`Retrying initialization (${this.retryCount}/${this.maxRetries})...`);
+                        await new Promise(r => setTimeout(r, this.retryDelay));
+                        await initializeWithRetry();
+                    } else {
+                        console.error('Max retries reached. Using fallback initialization.');
+                        this._fallbackInitialize();
+                        resolve();
+                    }
+                }
+            };
+
+            await initializeWithRetry();
         });
 
         return this.initPromise;
     }
 
-    // 私有初始化方法
-    _initialize() {
+    _fallbackInitialize() {
+        // 基础初始化，确保至少能显示默认语言
+        this.currentLang = this.fallbackLang;
+        this.updatePageLanguage();
+    }
+
+    async _initialize() {
         if (this.initialized) {
             return;
         }
+
+        // 验证翻译数据
+        this._validateTranslations();
 
         // 设置 MutationObserver 来处理动态加载的内容
         const observer = new MutationObserver((mutations) => {
@@ -50,23 +77,115 @@ class I18nManager {
             subtree: true
         });
 
-        this.updatePageLanguage();
-        this.setupLanguageSwitcher();
-        this.initialized = true;
+        // 预加载所有翻译数据
+        await this._preloadTranslations();
 
-        // 添加错误处理
-        window.addEventListener('error', (e) => {
-            if (e.message.includes('i18n')) {
-                console.error('Translation error:', e);
-                this.handleTranslationError();
+        // 初始化语言切换器
+        this.setupLanguageSwitcher();
+        
+        // 更新页面语言
+        await this.updatePageLanguage();
+
+        this.initialized = true;
+    }
+
+    async _preloadTranslations() {
+        // 预加载所有语言的翻译
+        const languages = ['zh-CN', 'zh-TW', 'en'];
+        for (const lang of languages) {
+            if (!this.translations[lang]) {
+                console.warn(`Missing translations for language: ${lang}`);
+            }
+        }
+    }
+
+    _validateTranslations() {
+        // 验证翻译数据的完整性
+        const languages = ['zh-CN', 'zh-TW', 'en'];
+        const missingTranslations = {};
+
+        languages.forEach(lang => {
+            if (!this.translations[lang]) {
+                console.error(`Missing translation object for language: ${lang}`);
+                return;
+            }
+
+            // 收集所有翻译键
+            const allKeys = new Set();
+            languages.forEach(l => {
+                Object.keys(this.translations[l] || {}).forEach(k => allKeys.add(k));
+            });
+
+            // 检查每个键是否存在
+            missingTranslations[lang] = [];
+            allKeys.forEach(key => {
+                if (!this.translations[lang][key]) {
+                    missingTranslations[lang].push(key);
+                }
+            });
+        });
+
+        // 报告缺失的翻译
+        languages.forEach(lang => {
+            if (missingTranslations[lang].length > 0) {
+                console.warn(`Missing translations for ${lang}:`, missingTranslations[lang]);
             }
         });
     }
 
-    // 处理翻译错误
-    handleTranslationError() {
-        // 尝试重新加载翻译
-        this.updatePageLanguage();
+    async updatePageLanguage() {
+        try {
+            document.documentElement.lang = this.currentLang;
+            
+            const elements = document.querySelectorAll('[data-i18n]');
+            for (const element of elements) {
+                try {
+                    const key = element.getAttribute('data-i18n');
+                    const params = this.getElementParams(element);
+                    const translation = this.translate(key, params);
+                    
+                    if (translation) {
+                        if (element.tagName === 'INPUT' && element.type === 'placeholder') {
+                            element.placeholder = translation;
+                        } else {
+                            element.textContent = translation;
+                        }
+                    } else {
+                        console.warn(`Missing translation for key: ${key} in language: ${this.currentLang}`);
+                        // 使用后备翻译
+                        const fallbackTranslation = this.translations[this.fallbackLang]?.[key];
+                        if (fallbackTranslation) {
+                            element.textContent = fallbackTranslation;
+                        }
+                    }
+                } catch (err) {
+                    console.error(`Error updating element with key: ${element.getAttribute('data-i18n')}`, err);
+                }
+            }
+
+            // 更新属性翻译
+            document.querySelectorAll('[data-i18n-attr]').forEach(element => {
+                try {
+                    const attrs = element.getAttribute('data-i18n-attr').split(',');
+                    attrs.forEach(attr => {
+                        const [attrName, key] = attr.trim().split(':');
+                        if (attrName && key) {
+                            const params = this.getElementParams(element);
+                            const translation = this.translate(key, params);
+                            if (translation) {
+                                element.setAttribute(attrName, translation);
+                            }
+                        }
+                    });
+                } catch (err) {
+                    console.error(`Error updating attributes for element`, err);
+                }
+            });
+        } catch (err) {
+            console.error('Error in updatePageLanguage:', err);
+            // 尝试使用后备方案
+            this._fallbackInitialize();
+        }
     }
 
     // 注册翻译
@@ -124,56 +243,6 @@ class I18nManager {
                 }
             }));
         });
-    }
-
-    // 更新页面语言
-    updatePageLanguage() {
-        try {
-            // 设置HTML文档的语言
-            document.documentElement.lang = this.currentLang;
-            
-            // 更新所有带有data-i18n属性的元素
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                try {
-                    const key = element.getAttribute('data-i18n');
-                    const params = this.getElementParams(element);
-                    const translation = this.translate(key, params);
-                    
-                    if (translation) {
-                        if (element.tagName === 'INPUT' && element.type === 'placeholder') {
-                            element.placeholder = translation;
-                        } else {
-                            element.textContent = translation;
-                        }
-                    } else {
-                        console.warn(`Missing translation for key: ${key} in language: ${this.currentLang}`);
-                    }
-                } catch (err) {
-                    console.error(`Error updating element with key: ${element.getAttribute('data-i18n')}`, err);
-                }
-            });
-
-            // 更新所有带有data-i18n-attr的元素
-            document.querySelectorAll('[data-i18n-attr]').forEach(element => {
-                try {
-                    const attrs = element.getAttribute('data-i18n-attr').split(',');
-                    attrs.forEach(attr => {
-                        const [attrName, key] = attr.trim().split(':');
-                        if (attrName && key) {
-                            const params = this.getElementParams(element);
-                            const translation = this.translate(key, params);
-                            if (translation) {
-                                element.setAttribute(attrName, translation);
-                            }
-                        }
-                    });
-                } catch (err) {
-                    console.error(`Error updating attributes for element`, err);
-                }
-            });
-        } catch (err) {
-            console.error('Error in updatePageLanguage:', err);
-        }
     }
 
     // 获取元素的参数

@@ -150,7 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', (e) => {
                 if (submenu) {
                     e.preventDefault();
-                    submenu.classList.toggle('active');
+                    item.classList.toggle('active');
+                    
+                    // 关闭其他打开的子菜单
+                    hasSubmenu.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
                 }
             });
         }
@@ -255,4 +262,37 @@ document.querySelectorAll('[data-spec-trigger]').forEach(button => {
         const productId = e.target.getAttribute('data-spec-trigger');
         showSpecifications(productId);
     });
+});
+
+// 移动端菜单控制
+const mobileMenuBtn = document.querySelector('.mobile-menu-toggle');
+const nav = document.querySelector('nav');
+const menuItems = document.querySelectorAll('.main-menu > li');
+
+if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+        nav.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+    });
+}
+
+// 点击页面其他区域关闭菜单
+document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 992) {
+        const isClickInside = nav.contains(e.target) || mobileMenuBtn.contains(e.target);
+        
+        if (!isClickInside && nav.classList.contains('active')) {
+            nav.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+    }
+});
+
+// 窗口调整大小时重置菜单状态
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 992) {
+        nav.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        menuItems.forEach(item => item.classList.remove('active'));
+    }
 });

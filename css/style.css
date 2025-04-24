@@ -933,9 +933,7 @@ footer {
         padding: 8px;
         font-size: 14px;
     }
-}
-
-/* 移动端菜单按钮 */
+}/* 移动端菜单按钮 */
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -1140,3 +1138,4 @@ footer {
         height: 200px;
     }
 }
+

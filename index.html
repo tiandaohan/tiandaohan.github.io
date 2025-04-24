@@ -17,7 +17,6 @@
             <div class="header-content">
                 <div class="logo">
                     <h1 data-i18n="companyShort">INTER SKY PROFIT LIMITED</h1>
-                    <p data-i18n="companyName">国际天利有限公司</p>
                 </div>
                 <button class="mobile-menu-toggle" aria-label="Toggle Menu">
                     <span></span>
@@ -850,18 +849,16 @@
     <script>
         // 确保DOM完全加载后再初始化i18n
         document.addEventListener('DOMContentLoaded', function() {
-            // 等待一小段时间确保所有资源都加载完成
             setTimeout(() => {
                 if (window.i18n) {
                     window.i18n.init().then(() => {
-                        // 强制更新一次页面语言
                         window.i18n.updatePageLanguage();
                     });
                 }
             }, 100);
         });
     </script>
-    <script src="js/main.js"></script>
+    <script type="module" src="js/main.js"></script>
     <script src="js/sections.js"></script>
 </body>
 

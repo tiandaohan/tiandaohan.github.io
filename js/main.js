@@ -10,10 +10,24 @@ const body = document.body;
 // 导航菜单
 class Navigation {
     constructor() {
+        // 等待DOM加载完成后再初始化
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => this.initialize());
+        } else {
+            this.initialize();
+        }
+    }
+
+    initialize() {
         this.nav = document.querySelector('nav');
         this.menuToggle = document.querySelector('.mobile-menu-toggle');
         this.mainMenu = document.querySelector('.main-menu');
-        this.init();
+        
+        if (this.nav && this.menuToggle && this.mainMenu) {
+            this.init();
+        } else {
+            console.warn('Some navigation elements are missing');
+        }
     }
 
     init() {
@@ -22,18 +36,25 @@ class Navigation {
     }
 
     setupEventListeners() {
-        this.menuToggle.addEventListener('click', () => this.toggleMenu());
+        if (this.menuToggle) {
+            this.menuToggle.addEventListener('click', () => this.toggleMenu());
+        }
+        
         window.addEventListener('scroll', throttle(() => this.handleScroll(), 100));
         window.addEventListener('resize', debounce(() => this.handleResize(), 250));
     }
 
     toggleMenu() {
+        if (!this.menuToggle || !this.mainMenu) return;
+        
         this.menuToggle.classList.toggle('active');
         this.mainMenu.classList.toggle('active');
         document.body.classList.toggle('menu-open');
     }
 
     handleScroll() {
+        if (!this.nav) return;
+        
         const scrollPosition = window.scrollY;
         if (scrollPosition > 100) {
             this.nav.classList.add('scrolled');
@@ -43,6 +64,8 @@ class Navigation {
     }
 
     handleResize() {
+        if (!this.menuToggle || !this.mainMenu) return;
+        
         if (window.innerWidth > 768) {
             this.menuToggle.classList.remove('active');
             this.mainMenu.classList.remove('active');
@@ -59,10 +82,17 @@ const closeBtn = document.querySelector('.close-btn');
 // 产品规格模态框
 class ProductSpecs {
     constructor() {
-        this.modal = document.getElementById('specModal');
+        this.initialize();
+    }
+
+    initialize() {
+        this.modal = document.getElementById('spec-modal-new');
         this.specTables = document.querySelectorAll('.spec-table');
-        this.closeBtn = document.querySelector('.modal-close');
-        this.init();
+        this.closeBtn = document.querySelector('.close-btn');
+        
+        if (this.modal && this.closeBtn) {
+            this.init();
+        }
     }
 
     init() {
@@ -70,31 +100,49 @@ class ProductSpecs {
     }
 
     setupEventListeners() {
-        this.closeBtn.addEventListener('click', () => this.closeModal());
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) this.closeModal();
-        });
-        document.querySelectorAll('[data-spec-trigger]').forEach(button => {
-            button.addEventListener('click', () => this.showSpecifications(button.dataset.specTrigger));
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+        
+        if (this.modal) {
+            this.modal.addEventListener('click', (e) => {
+                if (e.target === this.modal) this.closeModal();
+            });
+        }
+
+        document.querySelectorAll('.spec-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const productId = e.target.dataset.product;
+                if (productId) {
+                    this.showSpecifications(productId);
+                }
+            });
         });
     }
 
     showSpecifications(productId) {
-        this.modal.classList.add('active');
+        if (!this.modal || !this.specTables) return;
+        
+        this.modal.style.display = 'block';
         this.specTables.forEach(table => {
-            table.style.display = table.id === `specs-${productId}` ? 'block' : 'none';
+            if (table.id === `spec-${productId}`) {
+                table.style.display = 'table';
+            } else {
+                table.style.display = 'none';
+            }
         });
     }
 
     closeModal() {
-        this.modal.classList.remove('active');
+        if (!this.modal) return;
+        this.modal.style.display = 'none';
     }
 }
 
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
-    new Navigation();
-    new ProductSpecs();
+    const navigation = new Navigation();
+    const productSpecs = new ProductSpecs();
 });
 
 // 复制主菜单到移动端菜单

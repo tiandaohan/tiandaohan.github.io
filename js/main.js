@@ -74,15 +74,13 @@ class Navigation {
     }
 }
 
-// 产品规格模态框控制
-const specModal = document.getElementById('spec-modal-new');
-const specTables = document.querySelectorAll('.spec-table');
-const closeBtn = document.querySelector('.close-btn');
-
 // 产品规格模态框
 class ProductSpecs {
     constructor() {
-        this.initialize();
+        // 只在存在产品规格按钮的页面初始化
+        if (document.querySelector('.spec-btn')) {
+            this.initialize();
+        }
     }
 
     initialize() {
@@ -92,6 +90,8 @@ class ProductSpecs {
         
         if (this.modal && this.closeBtn) {
             this.init();
+        } else {
+            console.warn('Product specs modal elements not found');
         }
     }
 
@@ -100,24 +100,27 @@ class ProductSpecs {
     }
 
     setupEventListeners() {
-        if (this.closeBtn) {
-            this.closeBtn.addEventListener('click', () => this.closeModal());
-        }
-        
-        if (this.modal) {
-            this.modal.addEventListener('click', (e) => {
-                if (e.target === this.modal) this.closeModal();
-            });
-        }
+        // 确保所有需要的元素都存在
+        if (!this.modal || !this.closeBtn) return;
 
-        document.querySelectorAll('.spec-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const productId = e.target.dataset.product;
-                if (productId) {
-                    this.showSpecifications(productId);
-                }
-            });
+        this.closeBtn.addEventListener('click', () => this.closeModal());
+        
+        this.modal.addEventListener('click', (e) => {
+            if (e.target === this.modal) this.closeModal();
         });
+
+        // 获取所有规格按钮并添加事件监听
+        const specButtons = document.querySelectorAll('.spec-btn');
+        if (specButtons.length > 0) {
+            specButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = e.target.dataset.product;
+                    if (productId) {
+                        this.showSpecifications(productId);
+                    }
+                });
+            });
+        }
     }
 
     showSpecifications(productId) {
@@ -142,7 +145,10 @@ class ProductSpecs {
 // 初始化
 document.addEventListener('DOMContentLoaded', () => {
     const navigation = new Navigation();
-    const productSpecs = new ProductSpecs();
+    // 只在需要的页面初始化产品规格
+    if (document.querySelector('.spec-btn')) {
+        const productSpecs = new ProductSpecs();
+    }
 });
 
 // 复制主菜单到移动端菜单

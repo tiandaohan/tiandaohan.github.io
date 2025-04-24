@@ -380,4 +380,120 @@ input:focus, textarea:focus, select:focus {
     .mb-3 { margin-bottom: var(--spacing-md-mobile); }
     .mb-4 { margin-bottom: var(--spacing-lg-mobile); }
     .mb-5 { margin-bottom: var(--spacing-xl-mobile); }
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    :root {
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 0.75rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-xxl: 2.5rem;
+        
+        --font-size-xs: 0.75rem;
+        --font-size-sm: 0.875rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-size-xl: 1.25rem;
+        --font-size-xxl: 1.5rem;
+    }
+
+    .container {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+
+    .row {
+        margin-left: calc(var(--spacing-md) * -1);
+        margin-right: calc(var(--spacing-md) * -1);
+    }
+
+    .col {
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+
+    /* 优化移动端网格布局 */
+    .grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    /* 优化移动端卡片布局 */
+    .card {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .card-header {
+        padding: var(--spacing-md);
+    }
+
+    .card-body {
+        padding: var(--spacing-md);
+    }
+
+    .card-footer {
+        padding: var(--spacing-md);
+    }
+
+    /* 优化移动端表格布局 */
+    .table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .table th,
+    .table td {
+        padding: var(--spacing-sm);
+        white-space: nowrap;
+    }
+
+    /* 优化移动端按钮布局 */
+    .btn {
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .btn-group {
+        flex-direction: column;
+    }
+
+    .btn-group .btn {
+        margin-right: 0;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    /* 优化移动端表单布局 */
+    .form-group {
+        margin-bottom: var(--spacing-md);
+    }
+
+    .form-label {
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .form-control {
+        padding: var(--spacing-sm);
+    }
+
+    /* 优化移动端模态框布局 */
+    .modal-content {
+        margin: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .modal-header {
+        padding: var(--spacing-md);
+    }
+
+    .modal-body {
+        padding: var(--spacing-md);
+    }
+
+    .modal-footer {
+        padding: var(--spacing-md);
+    }
 } 

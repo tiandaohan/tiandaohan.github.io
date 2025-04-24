@@ -22,6 +22,7 @@ class Navigation {
         this.nav = document.querySelector('nav');
         this.menuToggle = document.querySelector('.mobile-menu-toggle');
         this.mainMenu = document.querySelector('.main-menu');
+        this.submenuItems = document.querySelectorAll('.has-submenu');
         
         if (this.nav && this.menuToggle && this.mainMenu) {
             this.init();
@@ -40,6 +41,29 @@ class Navigation {
             this.menuToggle.addEventListener('click', () => this.toggleMenu());
         }
         
+        // 处理子菜单点击
+        this.submenuItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link) {
+                link.addEventListener('click', (e) => {
+                    if (window.innerWidth <= 992) {
+                        e.preventDefault();
+                        item.classList.toggle('active');
+                    }
+                });
+            }
+        });
+
+        // 点击菜单外部关闭菜单
+        document.addEventListener('click', (e) => {
+            if (window.innerWidth <= 992 && 
+                this.nav.classList.contains('active') && 
+                !this.nav.contains(e.target) && 
+                !this.menuToggle.contains(e.target)) {
+                this.closeMenu();
+            }
+        });
+
         window.addEventListener('scroll', throttle(() => this.handleScroll(), 100));
         window.addEventListener('resize', debounce(() => this.handleResize(), 250));
     }
@@ -48,8 +72,21 @@ class Navigation {
         if (!this.menuToggle || !this.mainMenu) return;
         
         this.menuToggle.classList.toggle('active');
-        this.mainMenu.classList.toggle('active');
+        this.nav.classList.toggle('active');
         document.body.classList.toggle('menu-open');
+    }
+
+    closeMenu() {
+        if (!this.menuToggle || !this.mainMenu) return;
+        
+        this.menuToggle.classList.remove('active');
+        this.nav.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        
+        // 关闭所有子菜单
+        this.submenuItems.forEach(item => {
+            item.classList.remove('active');
+        });
     }
 
     handleScroll() {
@@ -66,10 +103,8 @@ class Navigation {
     handleResize() {
         if (!this.menuToggle || !this.mainMenu) return;
         
-        if (window.innerWidth > 768) {
-            this.menuToggle.classList.remove('active');
-            this.mainMenu.classList.remove('active');
-            document.body.classList.remove('menu-open');
+        if (window.innerWidth > 992) {
+            this.closeMenu();
         }
     }
 }

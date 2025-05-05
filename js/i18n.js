@@ -10,7 +10,7 @@ class I18nManager {
         this.retryCount = 0;
         this.retryDelay = 500; // 毫秒
         this.supportedLanguages = ['zh-CN', 'zh-TW', 'en'];
-        
+
         // 通用规格值（不需要翻译的技术参数）
         this.commonSpecValues = {
             'spec.portable.input.value': 'AC 220V±15%',
@@ -116,7 +116,7 @@ class I18nManager {
 
             // 初始化语言切换器
             this.setupLanguageSwitcher();
-            
+
             // 更新页面语言
             await this.updatePageLanguage();
 
@@ -173,14 +173,14 @@ class I18nManager {
     async updatePageLanguage() {
         try {
             document.documentElement.lang = this.currentLang;
-            
+
             const elements = document.querySelectorAll('[data-i18n]');
             for (const element of elements) {
                 try {
                     const key = element.getAttribute('data-i18n');
                     const params = this.getElementParams(element);
                     const translation = this.translate(key, params);
-                    
+
                     if (translation) {
                         if (element.tagName === 'INPUT' && element.type === 'placeholder') {
                             element.placeholder = translation;
@@ -256,8 +256,8 @@ class I18nManager {
             return this.commonSpecValues[key];
         }
 
-        let text = this.translations[this.currentLang]?.[key] 
-            || this.translations[this.fallbackLang]?.[key] 
+        let text = this.translations[this.currentLang]?.[key]
+            || this.translations[this.fallbackLang]?.[key]
             || key;
 
         // 支持参数替换，例如: "hello, {name}" => "hello, John"
@@ -269,16 +269,16 @@ class I18nManager {
         if (this.currentLang === lang) {
             return; // 如果语言相同，直接返回，避免不必要的重载
         }
-        
+
         try {
             localStorage.setItem('language', lang);
             this.currentLang = lang;
             this.updatePageLanguage();
-            
+
             // 触发自定义事件
             const event = new CustomEvent('languageChanged', { detail: { language: lang } });
             document.dispatchEvent(event);
-            
+
             // 更新按钮状态
             this.updateButtonStates();
         } catch (error) {
@@ -291,7 +291,7 @@ class I18nManager {
     getElementParams(element) {
         const paramsAttr = element.getAttribute('data-i18n-params');
         if (!paramsAttr) return {};
-        
+
         try {
             return JSON.parse(paramsAttr);
         } catch (e) {
@@ -368,7 +368,7 @@ i18n.registerTranslations('zh-CN', {
     // 公司信息
     'companyShort': '国际天利有限公司',
     'companyName': '国际天利有限公司',
-    
+
     // 导航菜单
     'nav.home': '首页',
     'nav.about': '关于我们',
@@ -449,11 +449,11 @@ i18n.registerTranslations('zh-CN', {
     // 联系方式
     'contact.title': '联系我们',
     'contact.address.label': '公司地址',
-    'contact.address': '香港九龙湾宏开道8号',
+    'contact.address': '香港上环永乐街116-118号祥顺大厦3楼A室',
     'contact.phone.label': '联系电话',
-    'contact.phone': '+852 1234 5678',
+    'contact.phone': '+852 3524 3104',
     'contact.email.label': '电子邮箱',
-    'contact.email': 'info@intersky.com',
+    'contact.email': 'interskyprofit@gmail.com',
     'contact.hours.label': '工作时间',
     'contact.hours.value': '周一至周五: 9:00 - 18:00',
 
@@ -487,45 +487,45 @@ i18n.registerTranslations('zh-CN', {
     'products.categories.ac': '交流充电器',
     'products.categories.dc': '直流充电器',
     'products.viewSpec': '查看规格',
-    
+
     // AC充电器
     'products.ac.portable.title': 'AC便携式充电器 3.5kW',
     'products.ac.portable.features.1': '便携方便',
     'products.ac.portable.features.2': '即插即用',
     'products.ac.portable.features.3': '友好界面',
     'products.ac.portable.features.4': '安全可靠',
-    
+
     'products.ac.7kw.title': 'AC充电器 7kW',
     'products.ac.7kw.features.1': '家用充电器RFID版本',
     'products.ac.7kw.features.2': 'Ocpp1.6版本',
     'products.ac.7kw.features.3': '4.3英寸屏幕',
     'products.ac.7kw.features.4': '多语言支持',
-    
+
     'products.ac.22kw.title': 'AC充电器 11kW/22kW',
     'products.ac.22kw.features.1': '家用充电器RFID版本',
     'products.ac.22kw.features.2': 'Ocpp1.6版本',
     'products.ac.22kw.features.3': 'LCD显示屏',
     'products.ac.22kw.features.4': '三相电源输入',
-    
+
     // DC充电器
     'products.dc.40kw.title': 'DC充电器 20kW-40kW',
     'products.dc.40kw.features.1': 'Ocpp1.6版本',
     'products.dc.40kw.features.2': '5英寸彩色触摸屏',
     'products.dc.40kw.features.3': '强制风冷',
     'products.dc.40kw.features.4': '多重保护功能',
-    
+
     'products.dc.120kw.title': 'DC充电器 60kW-120kW',
     'products.dc.120kw.features.1': 'Ocpp1.6版本',
     'products.dc.120kw.features.2': '7英寸彩色触摸屏',
     'products.dc.120kw.features.3': '双充电接口',
     'products.dc.120kw.features.4': '高功率输出',
-    
+
     'products.dc.240kw.title': 'DC充电器 120kW-240kW',
     'products.dc.240kw.features.1': 'Ocpp1.6版本',
     'products.dc.240kw.features.2': '55英寸大屏幕(可选)',
     'products.dc.240kw.features.3': '超高功率输出',
     'products.dc.240kw.features.4': '商业充电站首选',
-    
+
     // 团队成员
     'team.title': '我们的团队',
     'team.intro': '我们的优势在于我们多元化且敬业的专业团队。每位成员都拥有再生能源、工程和项目管理的独特专业知识，共同协作推动创新和卓越。',
@@ -558,6 +558,32 @@ i18n.registerTranslations('zh-CN', {
     'experience.table.row4.count': '35',
     'experience.table.row5.location': '浦东新区两港充电站',
     'experience.table.row5.count': '35',
+    'experience.table.row6.location': '芮城充电中心',
+    'experience.table.row6.count': '34',
+    'experience.table.row7.location': '珠海城市职业技术学院',
+    'experience.table.row7.count': '26',
+    'experience.table.row8.location': '天河区骏景小学充电站',
+    'experience.table.row8.count': '26',
+    'experience.table.row9.location': '唐华充电站',
+    'experience.table.row9.count': '22',
+    'experience.table.row10.location': '易明充电站',
+    'experience.table.row10.count': '21',
+    'experience.table.row11.location': '木雅圣地360KW充电站',
+    'experience.table.row11.count': '17',
+    'experience.table.row12.location': '宜春畅海苑共享充电桩',
+    'experience.table.row12.count': '16',
+    'experience.table.row13.location': '平远县上举镇新农村兴建充电站',
+    'experience.table.row13.count': '11',
+    'experience.table.row14.location': '云奥泰生物科技',
+    'experience.table.row14.count': '9',
+    'experience.table.row15.location': '贞丰1号加油站',
+    'experience.table.row15.count': '8',
+    'experience.table.row16.location': '百色市右江区南大教育基地充站',
+    'experience.table.row16.count': '8',
+    'experience.table.row17.location': '奔月充电站',
+    'experience.table.row17.count': '8',
+    'experience.table.row18.location': '智信机械充电站',
+    'experience.table.row18.count': '8',
     'experience.viewMore': '查看更多项目',
 
     // 环保
@@ -581,7 +607,7 @@ i18n.registerTranslations('zh-CN', {
     // 模态框翻译
     'modal.title': '产品规格',
     'modal.close': '×',
-    
+
     // 规格项翻译
     'spec.input': '输入',
     'spec.output': '输出功率',
@@ -597,9 +623,9 @@ i18n.registerTranslations('zh-CN', {
 
 i18n.registerTranslations('zh-TW', {
     // 公司信息
-    'companyShort': 'INTER SKY PROFIT LIMITED',
+    'companyShort': '國際天利有限公司',
     'companyName': '國際天利有限公司',
-    
+
     // 导航菜单
     'nav.home': '首頁',
     'nav.about': '關於我們',
@@ -680,11 +706,11 @@ i18n.registerTranslations('zh-TW', {
     // 联系方式
     'contact.title': '聯繫我們',
     'contact.address.label': '公司地址',
-    'contact.address': '香港九龍灣宏開道8號',
+    'contact.address': '香港上環永樂街116-118號祥順大廈3樓A室',
     'contact.phone.label': '聯繫電話',
-    'contact.phone': '+852 1234 5678',
+    'contact.phone': '+852 3524 3104',
     'contact.email.label': '電子郵箱',
-    'contact.email': 'info@intersky.com',
+    'contact.email': 'interskyprofit@gmail.com',
     'contact.hours.label': '工作時間',
     'contact.hours.value': '週一至週五: 9:00 - 18:00',
 
@@ -718,45 +744,45 @@ i18n.registerTranslations('zh-TW', {
     'products.categories.ac': '交流充電器',
     'products.categories.dc': '直流充電器',
     'products.viewSpec': '查看規格',
-    
+
     // AC充電器
     'products.ac.portable.title': 'AC便攜式充電器 3.5kW',
     'products.ac.portable.features.1': '便攜方便',
     'products.ac.portable.features.2': '即插即用',
     'products.ac.portable.features.3': '友好界面',
     'products.ac.portable.features.4': '安全可靠',
-    
+
     'products.ac.7kw.title': 'AC充電器 7kW',
     'products.ac.7kw.features.1': '家用充電器RFID版本',
     'products.ac.7kw.features.2': 'Ocpp1.6版本',
     'products.ac.7kw.features.3': '4.3英寸屏幕',
     'products.ac.7kw.features.4': '多語言支持',
-    
+
     'products.ac.22kw.title': 'AC充電器 11kW/22kW',
     'products.ac.22kw.features.1': '家用充電器RFID版本',
     'products.ac.22kw.features.2': 'Ocpp1.6版本',
     'products.ac.22kw.features.3': 'LCD顯示屏',
     'products.ac.22kw.features.4': '三相電源輸入',
-    
+
     // DC充電器
     'products.dc.40kw.title': 'DC充電器 20kW-40kW',
     'products.dc.40kw.features.1': 'Ocpp1.6版本',
     'products.dc.40kw.features.2': '5英寸彩色觸摸屏',
     'products.dc.40kw.features.3': '強制風冷',
     'products.dc.40kw.features.4': '多重保護功能',
-    
+
     'products.dc.120kw.title': 'DC充電器 60kW-120kW',
     'products.dc.120kw.features.1': 'Ocpp1.6版本',
     'products.dc.120kw.features.2': '7英寸彩色觸摸屏',
     'products.dc.120kw.features.3': '雙充電接口',
     'products.dc.120kw.features.4': '高功率輸出',
-    
+
     'products.dc.240kw.title': 'DC充電器 120kW-240kW',
     'products.dc.240kw.features.1': 'Ocpp1.6版本',
     'products.dc.240kw.features.2': '55英寸大屏幕(可選)',
     'products.dc.240kw.features.3': '超高功率輸出',
     'products.dc.240kw.features.4': '商業充電站首選',
-    
+
     // 團隊成員
     'team.title': '我們的團隊',
     'team.intro': '我們的優勢在於我們多元化且敬業的專業團隊。每位成員都擁有再生能源、工程和項目管理的獨特專業知識，共同協作推動創新和卓越。',
@@ -789,6 +815,32 @@ i18n.registerTranslations('zh-TW', {
     'experience.table.row4.count': '35',
     'experience.table.row5.location': '浦東新區兩港充電站',
     'experience.table.row5.count': '35',
+    "experience.table.row6.location": "芮城充電中心",
+    "experience.table.row6.count": "34",
+    "experience.table.row7.location": "珠海城市職業技術學院",
+    "experience.table.row7.count": "26",
+    "experience.table.row8.location": "天河區駿景小學充電站",
+    "experience.table.row8.count": "26",
+    "experience.table.row9.location": "唐華充電站",
+    "experience.table.row9.count": "22",
+    "experience.table.row10.location": "易明充電站",
+    "experience.table.row10.count": "21",
+    "experience.table.row11.location": "木雅聖地360KW充電站",
+    "experience.table.row11.count": "17",
+    "experience.table.row12.location": "宜春暢海苑共享充電樁",
+    "experience.table.row12.count": "16",
+    "experience.table.row13.location": "平遠縣上舉鎮新農村興建充電站",
+    "experience.table.row13.count": "11",
+    "experience.table.row14.location": "雲奧泰生物科技",
+    "experience.table.row14.count": "9",
+    "experience.table.row15.location": "貞豐1號加油站",
+    "experience.table.row15.count": "8",
+    "experience.table.row16.location": "百色市右江區南大教育基地充站",
+    "experience.table.row16.count": "8",
+    "experience.table.row17.location": "奔月充電站",
+    "experience.table.row17.count": "8",
+    "experience.table.row18.location": "智信機械充電站",
+    "experience.table.row18.count": "8",
     'experience.viewMore': '查看更多項目',
 
     // 環保
@@ -812,7 +864,7 @@ i18n.registerTranslations('zh-TW', {
     // 模態框翻譯
     'modal.title': '產品規格',
     'modal.close': '×',
-    
+
     // 規格項翻譯
     'spec.input': '輸入',
     'spec.output': '輸出功率',
@@ -830,7 +882,7 @@ i18n.registerTranslations('en', {
     // Company Info
     'companyShort': 'INTER SKY PROFIT LIMITED',
     'companyName': 'INTER SKY PROFIT LIMITED',
-    
+
     // Navigation Menu
     'nav.home': 'Home',
     'nav.about': 'About Us',
@@ -911,11 +963,11 @@ i18n.registerTranslations('en', {
     // Contact
     'contact.title': 'Contact Us',
     'contact.address.label': 'Address',
-    'contact.address': '8 Wang Hoi Road, Kowloon Bay, Hong Kong',
+    'contact.address': 'Unit A,3/F Cheong Sun Tower116-118 Wing Lok Street, Sheung Wan, HK',
     'contact.phone.label': 'Phone',
-    'contact.phone': '+852 1234 5678',
+    'contact.phone': '+852 3524 3104',
     'contact.email.label': 'Email',
-    'contact.email': 'info@intersky.com',
+    'contact.email': 'interskyprofit@gmail.com',
     'contact.hours.label': 'Business Hours',
     'contact.hours.value': 'Mon-Fri: 9:00 AM - 6:00 PM',
 
@@ -949,45 +1001,45 @@ i18n.registerTranslations('en', {
     'products.categories.ac': 'AC Chargers',
     'products.categories.dc': 'DC Chargers',
     'products.viewSpec': 'View Specifications',
-    
+
     // AC Chargers
     'products.ac.portable.title': 'AC Portable Charger 3.5kW',
     'products.ac.portable.features.1': 'Portable & Convenient',
     'products.ac.portable.features.2': 'Plug and Play',
     'products.ac.portable.features.3': 'User-friendly Interface',
     'products.ac.portable.features.4': 'Safe and Reliable',
-    
+
     'products.ac.7kw.title': 'AC Charger 7kW',
     'products.ac.7kw.features.1': 'Home Charger with RFID',
     'products.ac.7kw.features.2': 'Ocpp1.6 Version',
     'products.ac.7kw.features.3': '4.3-inch Screen',
     'products.ac.7kw.features.4': 'Multi-language Support',
-    
+
     'products.ac.22kw.title': 'AC Charger 11kW/22kW',
     'products.ac.22kw.features.1': 'Home Charger with RFID',
     'products.ac.22kw.features.2': 'Ocpp1.6 Version',
     'products.ac.22kw.features.3': 'LCD Display',
     'products.ac.22kw.features.4': 'Three-phase Power Input',
-    
+
     // DC Chargers
     'products.dc.40kw.title': 'DC Charger 20kW-40kW',
     'products.dc.40kw.features.1': 'Ocpp1.6 Version',
     'products.dc.40kw.features.2': '5-inch Color Touch Screen',
     'products.dc.40kw.features.3': 'Forced Air Cooling',
     'products.dc.40kw.features.4': 'Multiple Protection Features',
-    
+
     'products.dc.120kw.title': 'DC Charger 60kW-120kW',
     'products.dc.120kw.features.1': 'Ocpp1.6 Version',
     'products.dc.120kw.features.2': '7-inch Color Touch Screen',
     'products.dc.120kw.features.3': 'Dual Charging Ports',
     'products.dc.120kw.features.4': 'High Power Output',
-    
+
     'products.dc.240kw.title': 'DC Charger 120kW-240kW',
     'products.dc.240kw.features.1': 'Ocpp1.6 Version',
     'products.dc.240kw.features.2': '55-inch Screen (Optional)',
     'products.dc.240kw.features.3': 'Ultra-high Power Output',
     'products.dc.240kw.features.4': 'Ideal for Commercial Stations',
-    
+
     // Team Members
     'team.title': 'Our Team',
     'team.intro': 'Our strength lies in our diverse and dedicated team of professionals. Each member brings unique expertise in renewable energy, engineering, and project management.',
@@ -1020,6 +1072,32 @@ i18n.registerTranslations('en', {
     'experience.table.row4.count': '35',
     'experience.table.row5.location': 'Pudong New Area Lianggang Station',
     'experience.table.row5.count': '35',
+    "experience.table.row6.location": "Ruicheng Charging Center",
+    "experience.table.row6.count": "34",
+    "experience.table.row7.location": "Zhuhai City Vocational and Technical College",
+    "experience.table.row7.count": "26",
+    "experience.table.row8.location": "Junjing Primary School Charging Station, Tianhe District",
+    "experience.table.row8.count": "26",
+    "experience.table.row9.location": "Tanghua Charging Station",
+    "experience.table.row9.count": "22",
+    "experience.table.row10.location": "Yiming Charging Station",
+    "experience.table.row10.count": "21",
+    "experience.table.row11.location": "Munya Holy Land 360KW Charging Station",
+    "experience.table.row11.count": "17",
+    "experience.table.row12.location": "Yichun Changhaiyuan Shared Charging Pile",
+    "experience.table.row12.count": "16",
+    "experience.table.row13.location": "Shangju Town New Rural Charging Station, Pingyuan County",
+    "experience.table.row13.count": "11",
+    "experience.table.row14.location": "Yunaotai Biotechnology",
+    "experience.table.row14.count": "9",
+    "experience.table.row15.location": "Zhenfeng No. 1 Gas Station",
+    "experience.table.row15.count": "8",
+    "experience.table.row16.location": "Nanda Education Base Charging Station, Youjiang District, Baise",
+    "experience.table.row16.count": "8",
+    "experience.table.row17.location": "Benyue Charging Station",
+    "experience.table.row17.count": "8",
+    "experience.table.row18.location": "Zhixin Machinery Charging Station",
+    "experience.table.row18.count": "8",
     'experience.viewMore': 'View More Projects',
 
     // Environment
@@ -1043,7 +1121,7 @@ i18n.registerTranslations('en', {
     // Modal translations
     'modal.title': 'Product Specifications',
     'modal.close': '×',
-    
+
     // Specification item translations
     'spec.input': 'Input',
     'spec.output': 'Output Power',

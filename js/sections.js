@@ -139,50 +139,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // 查看更多项目按钮
-    const viewMoreBtn = document.querySelector('.view-more-btn');
-    const projectTable = document.querySelector('.project-table table tbody');
-    const additionalProjects = [
-        ['芮城充电中心', 'Ruicheng charging center', '34'],
-        ['珠海城市职业技术学院', 'Zhuhai City Vocational and Technical College', '26'],
-        ['天河区骏景小学充电站', 'Tianhe District Junjing Primary School charging station', '26'],
-        ['唐华充电站', 'Tanghua charging station', '22'],
-        ['易明充电站', 'Yiming charging station', '21'],
-        ['木雅圣地360KW充电站', 'Muya Holy Land 360KW charging station', '17'],
-        ['宜春畅海苑共享充电桩', 'Yichun Changhaiyuan shared charging pile', '16'],
-        ['平远县上举镇新农村兴建充电站', 'Pingyuan County Shangju Town New Rural Construction Charging Station', '11'],
-        ['云奥泰生物科技', 'Yunaotai Biotechnology', '9'],
-        ['贞丰1号加油站', 'Zhenfeng No. 1 Gas Station', '8'],
-        ['百色市右江区南大教育基地充站', 'Baise City Youjiang District Nanda Education base charging station', '8'],
-        ['奔月充电站', 'Benyue charging station', '8'],
-        ['智信机械充电站', 'Zhixin Machinery charging station', '8']
-    ];
+    // const viewMoreBtn = document.querySelector('.view-more-btn');
+    // const projectTable = document.querySelector('.project-table table tbody');
+    // const additionalProjects = [
+    //     ['芮城充电中心', 'Ruicheng charging center', '34'],
+    //     ['珠海城市职业技术学院', 'Zhuhai City Vocational and Technical College', '26'],
+    //     ['天河区骏景小学充电站', 'Tianhe District Junjing Primary School charging station', '26'],
+    //     ['唐华充电站', 'Tanghua charging station', '22'],
+    //     ['易明充电站', 'Yiming charging station', '21'],
+    //     ['木雅圣地360KW充电站', 'Muya Holy Land 360KW charging station', '17'],
+    //     ['宜春畅海苑共享充电桩', 'Yichun Changhaiyuan shared charging pile', '16'],
+    //     ['平远县上举镇新农村兴建充电站', 'Pingyuan County Shangju Town New Rural Construction Charging Station', '11'],
+    //     ['云奥泰生物科技', 'Yunaotai Biotechnology', '9'],
+    //     ['贞丰1号加油站', 'Zhenfeng No. 1 Gas Station', '8'],
+    //     ['百色市右江区南大教育基地充站', 'Baise City Youjiang District Nanda Education base charging station', '8'],
+    //     ['奔月充电站', 'Benyue charging station', '8'],
+    //     ['智信机械充电站', 'Zhixin Machinery charging station', '8']
+    // ];
     
-    let showAllProjects = false;
+    // let showAllProjects = false;
     
-    if (viewMoreBtn) {
-        viewMoreBtn.addEventListener('click', function() {
-            if (!showAllProjects) {
-                additionalProjects.forEach(project => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${project[0]}</td>
-                        <td>${project[1]}</td>
-                        <td>${project[2]}</td>
-                    `;
-                    projectTable.appendChild(row);
-                });
+    // if (viewMoreBtn) {
+    //     viewMoreBtn.addEventListener('click', function() {
+    //         if (!showAllProjects) {
+    //             additionalProjects.forEach(project => {
+    //                 const row = document.createElement('tr');
+    //                 row.innerHTML = `
+    //                     <td>${project[0]}</td>
+    //                     <td>${project[1]}</td>
+    //                     <td>${project[2]}</td>
+    //                 `;
+    //                 projectTable.appendChild(row);
+    //             });
                 
-                this.textContent = '收起项目';
-                showAllProjects = true;
-            } else {
-                const rows = projectTable.querySelectorAll('tr');
-                for (let i = 5; i < rows.length; i++) {
-                    rows[i].remove();
-                }
+    //             this.textContent = '收起项目';
+    //             showAllProjects = true;
+    //         } else {
+    //             const rows = projectTable.querySelectorAll('tr');
+    //             for (let i = 5; i < rows.length; i++) {
+    //                 rows[i].remove();
+    //             }
                 
-                this.textContent = '查看更多项目';
-                showAllProjects = false;
-            }
-        });
-    }
+    //             this.textContent = '查看更多项目';
+    //             showAllProjects = false;
+    //         }
+    //     });
+    // }
 }); 

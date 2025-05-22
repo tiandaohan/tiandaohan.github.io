@@ -96,36 +96,49 @@ class I18nManager {
         try {
             // 验证翻译数据
             this._validateTranslations();
-
-            // 设置 MutationObserver 来处理动态加载的内容
-            const observer = new MutationObserver((mutations) => {
+    
+            // 设置 MutationObserver 来处理动态加载的内容（只设置一次）
+            this.mutationObserver = new MutationObserver((mutations) => {
                 mutations.forEach((mutation) => {
                     if (mutation.addedNodes.length) {
-                        this.updatePageLanguage();
+                        this.debouncedUpdatePageLanguage();
                     }
                 });
             });
-
-            observer.observe(document.body, {
+    
+            this.mutationObserver.observe(document.body, {
                 childList: true,
                 subtree: true
             });
-
+    
+            // 添加防抖方法
+            this.debouncedUpdatePageLanguage = this._debounce(this.updatePageLanguage.bind(this), 300);
+    
             // 预加载所有翻译数据
             await this._preloadTranslations();
-
+    
             // 初始化语言切换器
             this.setupLanguageSwitcher();
-
+    
             // 更新页面语言
             await this.updatePageLanguage();
-
+    
             this.initialized = true;
         } catch (error) {
             console.error('Error in _initialize:', error);
-            // 发生错误时使用后备初始化
             this._fallbackInitialize();
         }
+    }
+
+    // 添加防抖函数
+    _debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                func.apply(this, args);
+            }, wait);
+        };
     }
 
     async _preloadTranslations() {
@@ -267,23 +280,29 @@ class I18nManager {
     // 设置语言
     setLanguage(lang) {
         if (this.currentLang === lang) {
-            return; // 如果语言相同，直接返回，避免不必要的重载
+            return;
         }
-
+    
         try {
+            console.log('Setting language to:', lang); // 添加调试日志
             localStorage.setItem('language', lang);
             this.currentLang = lang;
             this.updatePageLanguage();
-
+    
             // 触发自定义事件
-            const event = new CustomEvent('languageChanged', { detail: { language: lang } });
-            document.dispatchEvent(event);
-
+            const event = new CustomEvent('languageChanged', { 
+                detail: { language: lang },
+                bubbles: true,
+                cancelable: true
+            });
+            
+            const dispatched = document.dispatchEvent(event);
+            console.log('Event dispatched:', dispatched); // 检查事件是否被取消
+    
             // 更新按钮状态
             this.updateButtonStates();
         } catch (error) {
             console.error('Error setting language:', error);
-            // 发生错误时不重载页面
         }
     }
 
